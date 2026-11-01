@@ -1,0 +1,10 @@
+{
+  "TF-IDF LR": 21.666070699691772,
+  "SGNS mean LR": 28.0229389667511,
+  "FastText mean LR": 0.0,
+  "SGNS+neg mean LR": 0.0,
+  "PA-W2V mean LR": 0.0,
+  "TF-IDF + SGNS": 0.0,
+  "TF-IDF + PA-W2V": 0.0,
+  "DistilBERT fine-tuned": 1505.327142238617
+}

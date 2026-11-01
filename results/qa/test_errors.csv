@@ -1,0 +1,27 @@
+question,gold,prediction,f1,doc_id,gold_doc
+For how long has Comcast been repeatedly claiming ownership of a cable modem the customer owns?,"['4 years', 'last 4 years']",three years,0.5,4660,78
+On what date was service interrupted before a lightning strike on an amplifier was blamed?,"['September 20, 2015']",12/16,0.0,3103,331
+Which service will the customer switch to after the disputed 600 gb data usage bill?,['U-verse'],internet,0.0,588,722
+How much was the second month's bill for the customer whose home security package was quoted at $150?,['$700'],20,0.0,2598,805
+How much in lost wages did the customer lose because of the outage on 8/8/2012?,['$286'],"over $1,000",0.0,4404,872
+What refund did Comcast offer for the work-from-home outage on 8/8/2012?,['$4'],$15.25,0.0,2245,872
+What system was the customer's email account supposed to migrate to?,['SmartZone'],GMAIL,0.0,2734,1255
+Which provider is the customer moving to after two months of daily television freezes?,['DirecTV'],Comcast,0.0,1424,1424
+Who is the Comcast president named by the customer going to small claims court?,['Neil Smit'],Comcast or some local franchise authority,0.0,5123,1479
+What monthly equipment charge did the customer find for equipment Comcast never provided?,['$10.00'],$537.37,0.0,3178,1765
+How long did the customer spend on the phone in a single day over charges that started in July?,"['4 hours', 'almost 4 hours']",14-18 times a day,0.0,3437,2050
+How often does DVR playback stop for the customer who cancelled and moved to DIRECTV?,"['15 minutes', 'every 15 minutes']",10 minutes,0.5,5601,2079
+"According to a recorded employee, what amount should the bill never exceed?",['158.00'],158.00 a month,0.6666666666666666,2407,2407
+How long has the customer been on hold because someone else's bill was added to their account?,['48 mins'],3 months,0.0,3432,2415
+How long does the customer say it takes just to book an appointment with Comcast?,['20 minutes'],Three weeks,0.0,2389,2518
+What was the starting bill of the customer who returned a router through UPS?,['$99.55'],15 dollars,0.0,2699,2699
+What credit did the customer finally accept after the technician visit charge?,['$40'],twenty dollar,0.0,1086,2923
+Which company did the elderly mother with the exposed cable wire leave for Comcast?,['Verizon'],Comcast,0.0,3072,3004
+What would the internet price become if the customer cancelled TV service?,['$64.95'],$70/month,0.0,1136,3804
+What is the name of the extra charge added to the $42.95 plan?,"['Comcast Performance Plus', 'Performance Plus']",$10 fee,0.0,4717,4717
+How much is Comcast demanding from the customer charged for four years for a modem they never had?,['$543.54'],$115.69,0.0,3682,4764
+What charge appeared for having the tech guy repair Comcast's own service?,['$28'],$10.00,0.0,846,4965
+How much was the rebate rejected over a missing order number?,['$125'],$175,0.0,5488,5121
+Which company does the customer wish they had picked instead after losing the rebate?,['Quest'],Comcast,0.0,3293,5121
+Who will fine the customer because of wires wrapped around the front of their home?,"['homeowners association', 'my homeowners association']",Comcast,0.0,5205,5205
+In which region is the customer whose cable went out 4 times in October?,['S. Florida'],Houston,0.0,818,4290

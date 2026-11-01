@@ -1,0 +1,20 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Ablation on 68 held-out answerable questions.}
+\label{tab:qaablation}
+\begin{tabular}{lccc}
+\toprule
+System & EM & 95\% CI & F1 \\
+\midrule
+Rule extractor (regex types) & 0.324 & 0.221--0.441 & 0.338 \\
+BM25 + RoBERTa-SQuAD2, no gate & 0.588 & 0.471--0.706 & 0.632 \\
+BM25 + RoBERTa-SQuAD2, gate & 0.618 & 0.500--0.735 & 0.642 \\
+BM25+SGNS + RoBERTa-SQuAD2, gate & 0.544 & 0.426--0.662 & 0.561 \\
+BM25+PA-W2V + RoBERTa-SQuAD2, gate & 0.500 & 0.382--0.618 & 0.532 \\
+BM25 rerank PA-W2V 0.25 + RoBERTa-SQuAD2, gate & 0.632 & 0.515--0.735 & 0.650 \\
+Dev-selected retriever + DistilBERT-SQuAD, gate & 0.574 & 0.456--0.677 & 0.596 \\
+\textbf{Dev-selected system} & \textbf{0.618} & \textbf{0.500--0.735} & \textbf{0.642} \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,221 @@
+{
+  "triage": [
+    {
+      "review": "my broadband keeps disconnecting and customer service has not fixed it",
+      "prediction": "Bad",
+      "probability_good": 0.03949878537255682,
+      "decision": "automatic",
+      "similar": [
+        {
+          "cosine": 0.49539025102608214,
+          "label": "Bad",
+          "text": "terrible keeps disconnecting"
+        },
+        {
+          "cosine": 0.2306022342416904,
+          "label": "Bad",
+          "text": "terrible internet connection though out the house keeps disconnecting upstairs is the worst even with a plug in pod u supplied"
+        },
+        {
+          "cosine": 0.20626352539065002,
+          "label": "Bad",
+          "text": "the service is weak in most parts of my house my bathroom kitchen and kids room it keeps disconnecting wifi calls"
+        }
+      ]
+    },
+    {
+      "review": "the engineer arrived on time and the router was set up in minutes",
+      "prediction": "Good",
+      "probability_good": 0.939163652846009,
+      "decision": "automatic",
+      "similar": [
+        {
+          "cosine": 0.30822851294767084,
+          "label": "Good",
+          "text": "good service arrived on time"
+        },
+        {
+          "cosine": 0.29167851710455966,
+          "label": "Good",
+          "text": "the engineer arrived on time and started work straight was friendly polite and went as expected and new wifi up and took about hours or so"
+        },
+        {
+          "cosine": 0.24259079198287486,
+          "label": "Good",
+          "text": "engineer arrived next day good service"
+        }
+      ]
+    },
+    {
+      "review": "it was fine i suppose though the price went up after a few months",
+      "prediction": "Good",
+      "probability_good": 0.8614325187934918,
+      "decision": "automatic",
+      "similar": [
+        {
+          "cosine": 0.20344148979999432,
+          "label": "Good",
+          "text": "quick better than a few months ago"
+        },
+        {
+          "cosine": 0.19452847342553825,
+          "label": "Bad",
+          "text": "very bad coverage wouldnt reach upstairs wouldnt help me out just left after months price went up to from was ment to get mb and only got very bad"
+        },
+        {
+          "cosine": 0.16598428091706804,
+          "label": "Bad",
+          "text": "wanted to cancel couldnt get through to anyone on the phone just left listening to loud music maybe i would have renewed with them as the service was fine they "
+        }
+      ]
+    },
+    {
+      "review": "the speed is good but nobody answers when you call and the bill was wrong once",
+      "prediction": "Good",
+      "probability_good": 0.8004714691705127,
+      "decision": "automatic",
+      "similar": [
+        {
+          "cosine": 0.23027440633118365,
+          "label": "Bad",
+          "text": "internet speed is good but expensive so should be"
+        },
+        {
+          "cosine": 0.21843326865849633,
+          "label": "Good",
+          "text": "lately in the last months i had no problem at all and the speed is good"
+        },
+        {
+          "cosine": 0.15895407858571348,
+          "label": "Bad",
+          "text": "i am a home worker and i am paying for m and the speed is speed is mbps this is very has now lowered my expectations"
+        }
+      ]
+    },
+    {
+      "review": "great deal at first however the router needed replacing twice and they sorted it eventually",
+      "prediction": "Good",
+      "probability_good": 0.9815926149275948,
+      "decision": "automatic",
+      "similar": [
+        {
+          "cosine": 0.20386768538314048,
+          "label": "Good",
+          "text": "very helpful great deal"
+        },
+        {
+          "cosine": 0.17123080126526347,
+          "label": "Good",
+          "text": "the service was great and i got a great deal"
+        },
+        {
+          "cosine": 0.1371729045181405,
+          "label": "Good",
+          "text": "renewed with virgin media and got a great deal"
+        }
+      ]
+    }
+  ],
+  "digest": {
+    "share_good": 0.1375,
+    "summary": [
+      "im not happy with virgin media",
+      "i had phone call to virgin mobile customer services just to change my but i had silly conversation and no have been virgin broadband around more than years and last year i decided to change my mobile to virgin and now i am realy p off with your",
+      "i want my contract cancelled"
+    ]
+  },
+  "answers": [
+    {
+      "question": "What was the cancellation fee for the customer who moved to a neighborhood not serviced by Comcast?",
+      "answer": "$756.82",
+      "status": "answered",
+      "score": 11.859116315841675,
+      "doc_id": 2562,
+      "evidence": "Now the sticky part it seems that Comcast is dictating where I can live if you have an existing Comcast service contract. If you happen to move to a neighborhood that is not serviced by Comcast you have to pay an outrageous cancellation fee. Mine was $756.82.",
+      "type": "MONEY"
+    },
+    {
+      "question": "Which insurance company refused to pay the full electrician estimate after faulty cable wiring?",
+      "answer": "Liberty Mutual",
+      "status": "answered",
+      "score": 10.577487627665201,
+      "doc_id": 4307,
+      "evidence": "I've gotten multiple estimates from electricians. But Comcast's insurance company (Liberty Mutual) will not pay the full amount, leaving me to pay the difference. I'm being punished for choosing Comcast as my provider.",
+      "type": "ENTITY"
+    },
+    {
+      "question": "How much does Comcast charge for 5G home internet in Seattle?",
+      "answer": null,
+      "status": "abstained",
+      "score": 2.9099317959376743
+    }
+  ],
+  "neighbours": {
+    "reliable": [
+      [
+        "stable",
+        0.6928941011428833
+      ],
+      [
+        "solid",
+        0.6924918293952942
+      ],
+      [
+        "good",
+        0.6829488277435303
+      ],
+      [
+        "not_complaints",
+        0.6795186996459961
+      ],
+      [
+        "pricey",
+        0.6656383275985718
+      ]
+    ],
+    "not_reliable": [
+      [
+        "crashing",
+        0.7528579831123352
+      ],
+      [
+        "brothers",
+        0.7220603227615356
+      ],
+      [
+        "falling",
+        0.6975074410438538
+      ],
+      [
+        "lagging",
+        0.6883701682090759
+      ],
+      [
+        "atm",
+        0.6848647594451904
+      ]
+    ],
+    "unstable": [
+      [
+        "not_stable",
+        0.7937642335891724
+      ],
+      [
+        "pixelation",
+        0.7393776178359985
+      ],
+      [
+        "patchy",
+        0.7311162352561951
+      ],
+      [
+        "painfully",
+        0.7137741446495056
+      ],
+      [
+        "rendering",
+        0.7082548141479492
+      ]
+    ]
+  }
+}

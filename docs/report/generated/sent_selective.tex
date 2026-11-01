@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Selective triage with cross-fitted thresholds: the requested risk is compared with the risk achieved on unseen folds.}
+\label{tab:selective}
+\begin{tabular}{lccccc}
+\toprule
+Model & Target risk & Coverage & Achieved risk & Deferred & Bad recall (auto) \\
+\midrule
+TF-IDF LR & 0.10 & 0.989 & 0.099 & 112 & 0.923 \\
+TF-IDF LR & 0.05 & 0.841 & 0.049 & 1568 & 0.966 \\
+TF-IDF LR & 0.03 & 0.711 & 0.029 & 2849 & 0.980 \\
+TF-IDF LR & 0.02 & 0.613 & 0.020 & 3818 & 0.985 \\
+TF-IDF + PA-W2V & 0.10 & 0.987 & 0.099 & 125 & 0.926 \\
+TF-IDF + PA-W2V & 0.05 & 0.821 & 0.051 & 1766 & 0.962 \\
+TF-IDF + PA-W2V & 0.03 & 0.676 & 0.030 & 3200 & 0.977 \\
+TF-IDF + PA-W2V & 0.02 & 0.534 & 0.019 & 4605 & 0.981 \\
+DistilBERT fine-tuned & 0.10 & 1.000 & 0.084 & 0 & 0.910 \\
+DistilBERT fine-tuned & 0.05 & 0.910 & 0.050 & 892 & 0.946 \\
+DistilBERT fine-tuned & 0.03 & 0.817 & 0.032 & 1809 & 0.967 \\
+DistilBERT fine-tuned & 0.02 & 0.717 & 0.019 & 2798 & 0.982 \\
+\bottomrule
+\end{tabular}
+\end{table}

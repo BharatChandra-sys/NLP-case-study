@@ -1,0 +1,12 @@
+numpy
+pandas
+scipy
+scikit-learn
+torch
+transformers
+gensim
+rouge-score
+networkx
+matplotlib
+kaggle
+pytest

@@ -1,0 +1,27 @@
+{
+  "chosen": {
+    "retriever": "BM25 rerank SGNS 0.25",
+    "reader": "RoBERTa-SQuAD2",
+    "gate": true,
+    "weight": 2.0,
+    "dev_em": 0.6176470588235294,
+    "dev_f1": 0.6617647058823529
+  },
+  "tau": 3.2721939086914062,
+  "with_abstention": {
+    "tau": 3.2721939086914062,
+    "overall_accuracy": 0.6022727272727273,
+    "answer_coverage": 0.7205882352941176,
+    "answered_em": 0.7551020408163265,
+    "answered_f1": 0.7687074829931972,
+    "unanswerable_rejection": 0.8
+  },
+  "no_abstention": {
+    "tau": -100000000.0,
+    "overall_accuracy": 0.4772727272727273,
+    "answer_coverage": 1.0,
+    "answered_em": 0.6176470588235294,
+    "answered_f1": 0.642156862745098,
+    "unanswerable_rejection": 0.0
+  }
+}

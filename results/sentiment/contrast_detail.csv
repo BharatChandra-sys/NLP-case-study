@@ -1,0 +1,31 @@
+text,label,TF-IDF LR,TF-IDF + PA-W2V,PA-W2V mean LR,DistilBERT fine-tuned
+the service is reliable,1,0.947,0.999,1.0,0.978
+the service is not reliable,0,0.312,0.075,0.085,0.104
+the connection is stable,1,0.569,0.918,0.957,0.934
+the connection is unstable,0,0.303,0.175,0.377,0.163
+the engineer was helpful,1,0.998,1.0,0.999,0.98
+the engineer was not helpful,0,0.927,0.257,0.199,0.474
+my problem was fixed quickly,1,0.992,1.0,1.0,0.97
+my problem was never fixed,0,0.76,0.787,0.854,0.333
+i would recommend this provider,1,0.925,0.941,0.869,0.94
+i would not recommend this provider,0,0.261,0.099,0.078,0.2
+the staff were polite,1,0.99,0.999,0.999,0.974
+the staff were not polite,0,0.938,0.994,0.992,0.261
+the broadband is fast,1,0.545,0.962,0.964,0.945
+the broadband is not fast,0,0.053,0.001,0.002,0.083
+billing is clear and easy,1,0.998,1.0,1.0,0.98
+billing is not clear or easy,0,0.821,0.842,0.97,0.25
+no problems at all with the router,1,0.904,0.983,0.978,0.968
+nothing but problems with the router,0,0.814,0.994,0.995,0.822
+i am happy with the price,1,0.995,0.998,0.992,0.971
+i am not happy with the price,0,0.424,0.121,0.211,0.101
+she was very friendly,1,1.0,0.999,0.998,0.977
+he was very unfriendly,0,1.0,0.997,0.983,0.225
+installation was smooth,1,0.953,0.999,0.999,0.978
+installation was a nightmare,0,0.837,0.637,0.54,0.084
+never had an issue with the signal,1,0.925,0.939,0.917,0.962
+always have an issue with the signal,0,0.976,0.993,0.978,0.959
+not bad at all,1,0.207,1.0,1.0,0.919
+not good at all,0,0.374,0.133,0.03,0.178
+customer support could not be better,1,0.195,0.012,0.006,0.274
+customer support could not be worse,0,0.03,0.136,0.086,0.619

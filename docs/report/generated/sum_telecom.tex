@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Telecom digests over 47 provider and provider-by-aspect clusters (no human references).}
+\label{tab:telecom}
+\begin{tabular}{lccccc}
+\toprule
+Method & Polarity gap & Aspect recall & Redundancy & Centroid cos & Words \\
+\midrule
+Lead & 0.046 & 0.653 & 0.030 & 0.280 & 48.1 \\
+Centroid & 0.074 & 0.521 & 0.317 & 0.517 & 48.4 \\
+TextRank & 0.065 & 0.562 & 0.290 & 0.518 & 48.5 \\
+MMR & 0.059 & 0.680 & 0.081 & 0.576 & 48.3 \\
+\textbf{PAB-MMR} & \textbf{0.019} & \textbf{0.850} & \textbf{0.072} & \textbf{0.545} & \textbf{48.6} \\
+BART-large-CNN & 0.081 & -- & -- & -- & 60.1 \\
+\bottomrule
+\end{tabular}
+\end{table}

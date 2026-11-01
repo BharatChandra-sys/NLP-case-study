@@ -1,0 +1,132 @@
+{"id": "a000", "split": "dev", "question": "How many years had the customer with the broken DVR manager been with Comcast and its predecessors?", "answers": ["35 years", "35"], "doc_id": 7, "answerable": true}
+{"id": "a001", "split": "test", "question": "For how long has Comcast been repeatedly claiming ownership of a cable modem the customer owns?", "answers": ["4 years", "last 4 years"], "doc_id": 78, "answerable": true}
+{"id": "a002", "split": "test", "question": "What did the monthly internet price rise to for the customer who used to pay $50 and calls tech support three times a week?", "answers": ["100", "100 a month"], "doc_id": 137, "answerable": true}
+{"id": "a003", "split": "dev", "question": "Which video calling application keeps dropping for the customer who previously used Cox, Metrocast and Frontier?", "answers": ["Skype"], "doc_id": 159, "answerable": true}
+{"id": "a004", "split": "test", "question": "How much does the customer on the blast plan with speeds of 2.26 to 5.75 pay each month?", "answers": ["93 dollars", "93"], "doc_id": 179, "answerable": true}
+{"id": "a005", "split": "test", "question": "How long did the customer wait for an installer before hearing their address did not exist in the system?", "answers": ["4 weeks"], "doc_id": 271, "answerable": true}
+{"id": "a006", "split": "dev", "question": "Which provider did the household order after their address could not be found in the Comcast system?", "answers": ["Frontier"], "doc_id": 271, "answerable": true}
+{"id": "a007", "split": "test", "question": "On what date was service interrupted before a lightning strike on an amplifier was blamed?", "answers": ["September 20, 2015"], "doc_id": 331, "answerable": true}
+{"id": "a008", "split": "test", "question": "What was the earliest date Comcast could get a technician out after the outage that also killed the landline?", "answers": ["September 23"], "doc_id": 331, "answerable": true}
+{"id": "a009", "split": "dev", "question": "How much per month does the customer pay for 75 mbps internet that usually delivers 20 mbps?", "answers": ["$85", "$85/mo"], "doc_id": 406, "answerable": true}
+{"id": "a010", "split": "test", "question": "What wait time was quoted to speak to a supervisor on the service phone line before the agent with the thick accent hung up?", "answers": ["10 minutes"], "doc_id": 473, "answerable": true}
+{"id": "a011", "split": "test", "question": "What was the monthly price increase for the customer with only internet and a land line and no cable?", "answers": ["$21.00"], "doc_id": 593, "answerable": true}
+{"id": "a012", "split": "dev", "question": "How much was the customer charged for one month of internet after allegedly using over 600 gb?", "answers": ["$150"], "doc_id": 722, "answerable": true}
+{"id": "a013", "split": "test", "question": "Which service will the customer switch to after the disputed 600 gb data usage bill?", "answers": ["U-verse"], "doc_id": 722, "answerable": true}
+{"id": "a014", "split": "test", "question": "How many days did it take Comcast to fix the slow internet reported on Jan 8?", "answers": ["4 days"], "doc_id": 764, "answerable": true}
+{"id": "a015", "split": "dev", "question": "What was the first bill for the customer promised a $150 home security, internet and cable package?", "answers": ["$500"], "doc_id": 805, "answerable": true}
+{"id": "a016", "split": "test", "question": "How much was the second month's bill for the customer whose home security package was quoted at $150?", "answers": ["$700"], "doc_id": 805, "answerable": true}
+{"id": "a017", "split": "test", "question": "What kind of terminal do merchants need when moving their business to Comcast?", "answers": ["IP-compatible terminal", "IP-compatible"], "doc_id": 836, "answerable": true}
+{"id": "a018", "split": "dev", "question": "What service fee was billed after a serviceman found a loose connection at the Comcast box?", "answers": ["$51.00"], "doc_id": 862, "answerable": true}
+{"id": "a019", "split": "test", "question": "How much in lost wages did the customer lose because of the outage on 8/8/2012?", "answers": ["$286"], "doc_id": 872, "answerable": true}
+{"id": "a020", "split": "test", "question": "What refund did Comcast offer for the work-from-home outage on 8/8/2012?", "answers": ["$4"], "doc_id": 872, "answerable": true}
+{"id": "a021", "split": "dev", "question": "What deposit was taken from the account of the customer who was then told service was unavailable at their address?", "answers": ["$50"], "doc_id": 908, "answerable": true}
+{"id": "a022", "split": "test", "question": "Where does the customer live who has Comcast as the only available provider and plays games online?", "answers": ["barracks", "the barracks"], "doc_id": 1034, "answerable": true}
+{"id": "a023", "split": "test", "question": "How long has the online gamer's intermittent internet problem been going on?", "answers": ["5 months"], "doc_id": 1034, "answerable": true}
+{"id": "a024", "split": "dev", "question": "What error number appeared when the customer could not access their email?", "answers": ["400"], "doc_id": 1182, "answerable": true}
+{"id": "a025", "split": "test", "question": "How long had the customer waited in chat without connecting after the email error?", "answers": ["15 minutes"], "doc_id": 1182, "answerable": true}
+{"id": "a026", "split": "test", "question": "Which earlier provider does the customer want back after two supervisors broke appointments?", "answers": ["Insight"], "doc_id": 1222, "answerable": true}
+{"id": "a027", "split": "dev", "question": "How long has the customer been without email during the migration?", "answers": ["10 days"], "doc_id": 1255, "answerable": true}
+{"id": "a028", "split": "test", "question": "What system was the customer's email account supposed to migrate to?", "answers": ["SmartZone"], "doc_id": 1255, "answerable": true}
+{"id": "a029", "split": "test", "question": "Which email software does Comcast blame when accusing the customer of spamming?", "answers": ["Microsoft Outlook"], "doc_id": 1305, "answerable": true}
+{"id": "a030", "split": "dev", "question": "How many technicians have visited the customer with intermittent high speed internet who feels discriminated against?", "answers": ["6"], "doc_id": 1334, "answerable": true}
+{"id": "a031", "split": "test", "question": "Which provider is the customer moving to after two months of daily television freezes?", "answers": ["DirecTV"], "doc_id": 1424, "answerable": true}
+{"id": "a032", "split": "test", "question": "Who is the Comcast president named by the customer going to small claims court?", "answers": ["Neil Smit"], "doc_id": 1479, "answerable": true}
+{"id": "a033", "split": "dev", "question": "How long did the disconnection last that made the student lose access to an online exam?", "answers": ["3 minutes"], "doc_id": 1620, "answerable": true}
+{"id": "a034", "split": "test", "question": "What did the single-box cable bill increase to from 50 dollars?", "answers": ["343.60"], "doc_id": 1652, "answerable": true}
+{"id": "a035", "split": "test", "question": "What monthly equipment charge did the customer find for equipment Comcast never provided?", "answers": ["$10.00"], "doc_id": 1765, "answerable": true}
+{"id": "a036", "split": "dev", "question": "How long did Comcast say a refund would take for the wrongly charged equipment?", "answers": ["4 to 6 weeks"], "doc_id": 1765, "answerable": true}
+{"id": "a037", "split": "test", "question": "Which city does the reviewer say has only AT&T and Comcast as internet providers?", "answers": ["Houston"], "doc_id": 1781, "answerable": true}
+{"id": "a038", "split": "test", "question": "What was the claimed value of the cable box listed on the customer's credit report?", "answers": ["$500"], "doc_id": 1846, "answerable": true}
+{"id": "a039", "split": "dev", "question": "How far away is the office the homeowner must drive to with their ex to change the account name?", "answers": ["30 minutes"], "doc_id": 2037, "answerable": true}
+{"id": "a040", "split": "test", "question": "How long did the customer spend on the phone in a single day over charges that started in July?", "answers": ["4 hours", "almost 4 hours"], "doc_id": 2050, "answerable": true}
+{"id": "a041", "split": "test", "question": "What deposit did the customer owe that had never been discussed in the store?", "answers": ["50"], "doc_id": 2064, "answerable": true}
+{"id": "a042", "split": "dev", "question": "How much had the customer paid for service before being told about an undisclosed deposit?", "answers": ["111.46"], "doc_id": 2064, "answerable": true}
+{"id": "a043", "split": "test", "question": "How often does DVR playback stop for the customer who cancelled and moved to DIRECTV?", "answers": ["15 minutes", "every 15 minutes"], "doc_id": 2079, "answerable": true}
+{"id": "a044", "split": "test", "question": "In which city has this customer had Comcast since 2009?", "answers": ["Tucson"], "doc_id": 2079, "answerable": true}
+{"id": "a045", "split": "dev", "question": "What is the minimum hold time the customer experiences while being passed between billing and technical support about OnDemand?", "answers": ["45 minutes"], "doc_id": 2277, "answerable": true}
+{"id": "a046", "split": "test", "question": "What price did the Internet plus 25 online order show on xfinity.com?", "answers": ["$17/month", "$17"], "doc_id": 2292, "answerable": true}
+{"id": "a047", "split": "test", "question": "What price did Comcast insist on after refusing the Internet plus 25 online price?", "answers": ["$49.99/month", "$49.99"], "doc_id": 2292, "answerable": true}
+{"id": "a048", "split": "dev", "question": "What is the hourly pay of the customer who spent 90 minutes trying to get a remote?", "answers": ["40 dollars"], "doc_id": 2345, "answerable": true}
+{"id": "a049", "split": "test", "question": "According to a recorded employee, what amount should the bill never exceed?", "answers": ["158.00"], "doc_id": 2407, "answerable": true}
+{"id": "a050", "split": "test", "question": "How long has the customer been on hold because someone else's bill was added to their account?", "answers": ["48 mins"], "doc_id": 2415, "answerable": true}
+{"id": "a051", "split": "dev", "question": "What extra charge would apply if the customer on direct payment cancelled service?", "answers": ["$240"], "doc_id": 2508, "answerable": true}
+{"id": "a052", "split": "test", "question": "How long does the customer say it takes just to book an appointment with Comcast?", "answers": ["20 minutes"], "doc_id": 2518, "answerable": true}
+{"id": "a053", "split": "test", "question": "How much was the cancellation fee for the customer who moved to a neighborhood not serviced by Comcast?", "answers": ["$756.82"], "doc_id": 2562, "answerable": true}
+{"id": "a054", "split": "dev", "question": "What was the quoted internet-only rate for the customer overcharged for a leased modem?", "answers": ["$39.99"], "doc_id": 2575, "answerable": true}
+{"id": "a055", "split": "test", "question": "What was the June bill for the customer who was quoted an internet-only rate?", "answers": ["$290.04"], "doc_id": 2575, "answerable": true}
+{"id": "a056", "split": "test", "question": "What was the starting bill of the customer who returned a router through UPS?", "answers": ["$99.55"], "doc_id": 2699, "answerable": true}
+{"id": "a057", "split": "dev", "question": "What was the latest monthly bill of the customer who returned the router through UPS?", "answers": ["$167.43"], "doc_id": 2699, "answerable": true}
+{"id": "a058", "split": "test", "question": "What did the home security system cost per month for the customer who had it for only 3 days?", "answers": ["$30/month", "$30"], "doc_id": 2767, "answerable": true}
+{"id": "a059", "split": "test", "question": "What credit did the customer finally accept after the technician visit charge?", "answers": ["$40"], "doc_id": 2923, "answerable": true}
+{"id": "a060", "split": "dev", "question": "How old is the mother whose phone stopped working after switching on 12/8/14?", "answers": ["81-year-old", "81"], "doc_id": 3004, "answerable": true}
+{"id": "a061", "split": "test", "question": "Which company did the elderly mother with the exposed cable wire leave for Comcast?", "answers": ["Verizon"], "doc_id": 3004, "answerable": true}
+{"id": "a062", "split": "test", "question": "What contract term was the Business class customer signed to without full disclosure?", "answers": ["36 month"], "doc_id": 3212, "answerable": true}
+{"id": "a063", "split": "dev", "question": "How long was the customer held before reaching a representative when calling to cancel with an outstanding balance?", "answers": ["25 min"], "doc_id": 3318, "answerable": true}
+{"id": "a064", "split": "test", "question": "How much is the customer owed after returning all equipment from a nine year bundle?", "answers": ["$398.27"], "doc_id": 3486, "answerable": true}
+{"id": "a065", "split": "test", "question": "What credit was on the account of the customer who only paid $60 a month?", "answers": ["$80"], "doc_id": 3692, "answerable": true}
+{"id": "a066", "split": "dev", "question": "What does the customer with basic TV have to pay monthly for HD?", "answers": ["$9.90/month", "$9.90"], "doc_id": 3804, "answerable": true}
+{"id": "a067", "split": "test", "question": "What would the internet price become if the customer cancelled TV service?", "answers": ["$64.95"], "doc_id": 3804, "answerable": true}
+{"id": "a068", "split": "test", "question": "How much was the April bill for services the customer tried to cancel on February 23, 2013?", "answers": ["$259.73"], "doc_id": 3842, "answerable": true}
+{"id": "a069", "split": "dev", "question": "What was the charge for a single day of service for the customer whose kid's father held the account?", "answers": ["$162.92"], "doc_id": 3861, "answerable": true}
+{"id": "a070", "split": "test", "question": "What was the service change fee for removing the free Watchathon?", "answers": ["$2.99"], "doc_id": 3873, "answerable": true}
+{"id": "a071", "split": "test", "question": "What amount owed did the emailed bill show when the online account showed $73.45?", "answers": ["$117.13"], "doc_id": 3896, "answerable": true}
+{"id": "a072", "split": "dev", "question": "What was the value of the gift card promised with the bundle installed on 06-29-2011?", "answers": ["$200.00"], "doc_id": 4053, "answerable": true}
+{"id": "a073", "split": "test", "question": "How much did Comcast demand before reconnecting the customer whose bank statements went back to November 2011?", "answers": ["$170.00"], "doc_id": 4064, "answerable": true}
+{"id": "a074", "split": "test", "question": "Which insurance company refused to pay the full electrician estimate after faulty cable wiring?", "answers": ["Liberty Mutual"], "doc_id": 4307, "answerable": true}
+{"id": "a075", "split": "dev", "question": "How much was the insurer willing to pay towards the $1500 electrical repair?", "answers": ["$1125"], "doc_id": 4307, "answerable": true}
+{"id": "a076", "split": "test", "question": "Between what hours does the devoted ten-year customer's block lose cable service?", "answers": ["from 9 pm to 10 am", "9 pm to 10 am"], "doc_id": 4315, "answerable": true}
+{"id": "a077", "split": "test", "question": "At which retailer was the customer offered the $80 Triple Play HD price?", "answers": ["Best Buy"], "doc_id": 4499, "answerable": true}
+{"id": "a078", "split": "dev", "question": "In which city was the Triple Play HD price supposed to be honoured?", "answers": ["Memphis"], "doc_id": 4499, "answerable": true}
+{"id": "a079", "split": "test", "question": "What is the name of the extra charge added to the $42.95 plan?", "answers": ["Comcast Performance Plus", "Performance Plus"], "doc_id": 4717, "answerable": true}
+{"id": "a080", "split": "test", "question": "How much is Comcast demanding from the customer charged for four years for a modem they never had?", "answers": ["$543.54"], "doc_id": 4764, "answerable": true}
+{"id": "a081", "split": "dev", "question": "For how long was the customer charged for a broken DVR?", "answers": ["10 months"], "doc_id": 4901, "answerable": true}
+{"id": "a082", "split": "test", "question": "What charge appeared for having the tech guy repair Comcast's own service?", "answers": ["$28"], "doc_id": 4965, "answerable": true}
+{"id": "a083", "split": "test", "question": "At what time did the tech supposedly call during the 2pm to 4pm repair appointment?", "answers": ["3:30pm"], "doc_id": 4994, "answerable": true}
+{"id": "a084", "split": "dev", "question": "How much was in the account when the insufficient funds fee was charged?", "answers": ["over $2,000", "$2,000"], "doc_id": 5083, "answerable": true}
+{"id": "a085", "split": "test", "question": "How much was the rebate rejected over a missing order number?", "answers": ["$125"], "doc_id": 5121, "answerable": true}
+{"id": "a086", "split": "test", "question": "Which company does the customer wish they had picked instead after losing the rebate?", "answers": ["Quest"], "doc_id": 5121, "answerable": true}
+{"id": "a087", "split": "dev", "question": "What fee was quoted for simply lowering a bundle package price?", "answers": ["$150"], "doc_id": 5181, "answerable": true}
+{"id": "a088", "split": "test", "question": "Who will fine the customer because of wires wrapped around the front of their home?", "answers": ["homeowners association", "my homeowners association"], "doc_id": 5205, "answerable": true}
+{"id": "a089", "split": "test", "question": "Where is the call center handling the customer's business account?", "answers": ["Schaumburg, IL", "Schaumburg"], "doc_id": 5243, "answerable": true}
+{"id": "a090", "split": "dev", "question": "How much credit card business was lost over the weekend because of the service problems?", "answers": ["$3000.00", "more than $3000.00"], "doc_id": 5243, "answerable": true}
+{"id": "a091", "split": "test", "question": "How many days of work has the customer taken off waiting for Comcast?", "answers": ["18 days"], "doc_id": 5290, "answerable": true}
+{"id": "a092", "split": "test", "question": "Which free item was advertised with the triple play package ordered on 7/27/08?", "answers": ["WII"], "doc_id": 5291, "answerable": true}
+{"id": "a093", "split": "dev", "question": "What price did the customer who signed up for a promo in Feb 2007 expect to pay?", "answers": ["$99"], "doc_id": 5408, "answerable": true}
+{"id": "a094", "split": "test", "question": "How long was the customer on hold when complaining about overages on 5/30/08?", "answers": ["44 minutes"], "doc_id": 5478, "answerable": true}
+{"id": "a095", "split": "test", "question": "How old is the mother paying for basic TV in the area served only by Comcast?", "answers": ["78"], "doc_id": 5603, "answerable": true}
+{"id": "a096", "split": "dev", "question": "Which provider did the customer return to after being lied to by two employees about a package?", "answers": ["DirecTV"], "doc_id": 3653, "answerable": true}
+{"id": "a097", "split": "test", "question": "How long was the customer on the phone trying to sign up for telephone service?", "answers": ["1 1/2 hours"], "doc_id": 3632, "answerable": true}
+{"id": "a098", "split": "test", "question": "What one-time installation fee was promised to the customer later billed $250?", "answers": ["$60"], "doc_id": 2154, "answerable": true}
+{"id": "a099", "split": "dev", "question": "What does the customer pay monthly for blast internet they never signed up for?", "answers": ["$11", "$11 a month"], "doc_id": 3157, "answerable": true}
+{"id": "a100", "split": "test", "question": "In which region is the customer whose cable went out 4 times in October?", "answers": ["S. Florida"], "doc_id": 4290, "answerable": true}
+{"id": "a101", "split": "test", "question": "At what time did the phone service go out two days in a row?", "answers": ["10:30 am"], "doc_id": 4682, "answerable": true}
+{"id": "u000", "split": "dev", "question": "How much does Comcast charge for 5G home internet in Seattle?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u001", "split": "test", "question": "What was the name of the technician who repaired the fibre cabinet in Anchorage in March 2019?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u002", "split": "test", "question": "How many satellites does Comcast operate over Canada?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u003", "split": "dev", "question": "Which airline refunded the customer after their Comcast Wi-Fi failed on a flight?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u004", "split": "test", "question": "What is the price of the Xfinity Mars roaming add-on?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u005", "split": "test", "question": "Who is the chief financial officer of Comcast in Tokyo?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u006", "split": "dev", "question": "How long did the customer wait for a drone delivery of a modem?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u007", "split": "test", "question": "What fee does Comcast charge for cancelling a yacht internet subscription?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u008", "split": "test", "question": "On what date did Comcast open its first office in Nairobi?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u009", "split": "dev", "question": "How much did the customer pay for a Comcast smartwatch data plan in 2024?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u010", "split": "test", "question": "Which Olympic athlete endorsed the Comcast rural broadband plan?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u011", "split": "test", "question": "What is the maximum download speed of Comcast's quantum internet tier?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u012", "split": "dev", "question": "How many days did the Comcast outage in Reykjavik last?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u013", "split": "test", "question": "Which bank acquired the Comcast call center in Lisbon?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u014", "split": "test", "question": "What was the refund for the customer whose pet robot was disconnected?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u015", "split": "dev", "question": "How much is the monthly fee for the Comcast hot air balloon coverage package?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u016", "split": "test", "question": "Who signed the Comcast treaty with the city of Oslo?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u017", "split": "test", "question": "At what time does the Comcast store in Vladivostok open?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u018", "split": "dev", "question": "How many engineers did Comcast send to the Antarctic research base?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u019", "split": "test", "question": "What was the name of the agent who sold the submarine cable bundle?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u020", "split": "test", "question": "How long is the warranty on the Xfinity virtual reality headset?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u021", "split": "dev", "question": "Which university in Peru gave Comcast an award for customer service?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u022", "split": "test", "question": "What deposit is required for a Comcast contract on the Moon?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u023", "split": "test", "question": "How much did Comcast pay the customer for damaging a vineyard in Bordeaux?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u024", "split": "dev", "question": "Which language do Comcast agents in Greenland speak?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u025", "split": "test", "question": "What was the cost of the Comcast cryptocurrency mining router?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u026", "split": "test", "question": "When did Comcast launch television service in Mongolia?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u027", "split": "dev", "question": "Who won the Comcast chess tournament in Zurich?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u028", "split": "test", "question": "How many hours did the customer spend repairing a Comcast tractor?", "answers": [], "doc_id": null, "answerable": false}
+{"id": "u029", "split": "test", "question": "What is the discount for Comcast subscribers who own a helicopter?", "answers": [], "doc_id": null, "answerable": false}

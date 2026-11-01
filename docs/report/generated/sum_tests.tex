@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Paired Wilcoxon tests across the 47 telecom clusters.}
+\label{tab:telecomtest}
+\begin{tabular}{llccc}
+\toprule
+Metric & Versus & PAB-MMR & Other & $p$ \\
+\midrule
+Polarity gap & MMR & 0.019 & 0.059 & $<$0.0001 \\
+Aspect recall & MMR & 0.850 & 0.680 & $<$0.0001 \\
+Redundancy & MMR & 0.072 & 0.081 & 0.1334 \\
+Polarity gap & TextRank & 0.019 & 0.065 & $<$0.0001 \\
+Polarity gap & BART-large-CNN & 0.019 & 0.081 & 0.0002 \\
+\bottomrule
+\end{tabular}
+\end{table}

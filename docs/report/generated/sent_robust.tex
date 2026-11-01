@@ -1,0 +1,16 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Robustness: authored contrast set (30 sentences) and cross-domain test on Comcast complaints.}
+\label{tab:robust}
+\begin{tabular}{lcccc}
+\toprule
+Model (trained on all 10K) & Contrast acc. & Comcast macro-F1 & Comcast acc. & Comcast Bad recall \\
+\midrule
+TF-IDF LR & 0.667 & 0.685 & 0.985 & 0.994 \\
+TF-IDF + PA-W2V & 0.733 & 0.675 & 0.984 & 0.993 \\
+PA-W2V mean LR & 0.733 & 0.641 & 0.978 & 0.987 \\
+DistilBERT fine-tuned & 0.867 & 0.699 & 0.982 & 0.988 \\
+\bottomrule
+\end{tabular}
+\end{table}

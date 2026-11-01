@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+data/raw/
+data/external/
+kaggle_outputs/
+kaggle.json
+.env
+docs/report/*.aux
+docs/report/*.log
+docs/report/*.out
+docs/report/*.toc
+casestudy.md
+case_study_report-2.pdf
+docs/report/*.pdf

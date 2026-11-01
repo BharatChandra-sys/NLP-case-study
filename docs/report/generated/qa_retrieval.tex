@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Retrieval of the evidence complaint among 5,629 documents (held-out answerable questions).}
+\label{tab:retrieval}
+\begin{tabular}{lcccc}
+\toprule
+Retriever & Recall@1 & Recall@5 & Recall@20 & MRR \\
+\midrule
+BM25 & 0.603 & 0.824 & 0.868 & 0.699 \\
+SGNS dense & 0.162 & 0.324 & 0.500 & 0.234 \\
+PA-W2V dense & 0.132 & 0.265 & 0.397 & 0.192 \\
+BM25 + SGNS & 0.250 & 0.618 & 0.853 & 0.427 \\
+BM25 + PA-W2V & 0.235 & 0.559 & 0.853 & 0.391 \\
+BM25 rerank SGNS 0.25 & 0.603 & 0.824 & 0.868 & 0.703 \\
+BM25 rerank SGNS 0.5 & 0.603 & 0.824 & 0.868 & 0.700 \\
+BM25 rerank PA-W2V 0.25 & 0.603 & 0.838 & 0.882 & 0.697 \\
+BM25 rerank PA-W2V 0.5 & 0.588 & 0.838 & 0.882 & 0.695 \\
+\bottomrule
+\end{tabular}
+\end{table}

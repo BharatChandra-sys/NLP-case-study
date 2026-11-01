@@ -1,0 +1,15 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Sentence-boundary recovery after stripping punctuation from 453 FewSum reviews (tolerance two words).}
+\label{tab:seg}
+\begin{tabular}{lcccc}
+\toprule
+Segmenter & Precision & Recall & F1 & ROUGE-2 (test) \\
+\midrule
+Cue words & 0.254 & 0.179 & 0.194 & 0.047 \\
+Fixed 15-word windows & 0.320 & 0.306 & 0.299 & 0.055 \\
+\textbf{Punctuation restoration} & \textbf{0.818} & \textbf{0.887} & \textbf{0.828} & \textbf{0.054} \\
+\bottomrule
+\end{tabular}
+\end{table}

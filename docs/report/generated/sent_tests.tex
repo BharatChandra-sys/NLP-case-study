@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Paired comparisons: bootstrap macro-F1 difference and exact McNemar test.}
+\label{tab:senttest}
+\begin{tabular}{p{6.4cm}ccc}
+\toprule
+Comparison (A vs B) & F1 diff & 95\% CI & McNemar $p$ \\
+\midrule
+TF-IDF + PA-W2V vs TF-IDF LR & -0.0012 & -0.0057 to +0.0032 & 0.5984 \\
+TF-IDF + PA-W2V vs TF-IDF + SGNS & +0.0049 & +0.0011 to +0.0088 & 0.0184 \\
+PA-W2V mean LR vs SGNS mean LR & +0.0140 & +0.0087 to +0.0193 & $<$0.0001 \\
+PA-W2V mean LR vs SGNS+neg mean LR & +0.0076 & +0.0029 to +0.0119 & 0.0007 \\
+SGNS+neg mean LR vs SGNS mean LR & +0.0064 & +0.0022 to +0.0107 & 0.0062 \\
+DistilBERT fine-tuned vs TF-IDF LR & +0.0190 & +0.0132 to +0.0249 & $<$0.0001 \\
+DistilBERT fine-tuned vs TF-IDF + PA-W2V & +0.0202 & +0.0144 to +0.0260 & $<$0.0001 \\
+\bottomrule
+\end{tabular}
+\end{table}
