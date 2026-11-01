@@ -45,8 +45,8 @@ def push_kernel(name):
         shutil.copy(ROOT / "notebooks" / f"{name}.ipynb", tmp / f"{name}.ipynb")
         meta = {
             "id": f"{USER}/{KERNELS[name]}", "title": KERNELS[name], "code_file": f"{name}.ipynb", "language": "python",
-            "kernel_type": "notebook", "is_private": True, "enable_gpu": True, "enable_internet": True,
-            "dataset_sources": [DATASET, COMCAST], "competition_sources": [], "kernel_sources": [],
+            "kernel_type": "notebook", "is_private": False, "enable_gpu": True, "enable_internet": True,
+            "dataset_sources": [COMCAST], "competition_sources": [], "kernel_sources": [],
         }
         (tmp / "kernel-metadata.json").write_text(json.dumps(meta))
         kaggle("kernels", "push", "-p", str(tmp))

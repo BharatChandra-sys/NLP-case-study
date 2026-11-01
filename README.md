@@ -23,7 +23,7 @@ Telecom teams need to find unhappy customers, understand what customers say in a
 | **Word2Vec** | PA-W2V: negation binding and polarity counter-fitting | Held-out antonym cosine 0.683 | **0.373** |
 | | | Neighbour polarity purity 0.773 | **0.839** |
 | **Sentiment** | Calibrated triage with cross-fitted deferral | TF-IDF macro-F1 0.897 | **DistilBERT 0.916** |
-| | | 5% error target, no control | **4.95% achieved at 91% coverage** |
+| | | 5% error target, no control | **4.93% achieved at 91% coverage** |
 | **Summarization** | PAB-MMR: polarity and aspect balance | MMR polarity gap 0.059 | **0.019** |
 | | | MMR aspect recall 0.680 | **0.850** |
 | | Punctuation recovery for unpunctuated text | Fixed windows boundary F1 0.299 | **0.828** |
@@ -87,6 +87,18 @@ system.ask("How much does Comcast charge for 5G home internet in Seattle?")
 # status: abstained, because the corpus does not contain this fact
 ```
 
+## Executed runs on Kaggle
+
+Every run is public, with its code, cell outputs and log. Each one cloned this repository from GitHub.
+
+| Case study | Kaggle notebook |
+|---|---|
+| Word2Vec | [telelens-01-word2vec](https://www.kaggle.com/code/bharatchandra1234/telelens-01-word2vec) |
+| Sentiment Classification | [telelens-02-sentiment](https://www.kaggle.com/code/bharatchandra1234/telelens-02-sentiment) |
+| Text Summarization | [telelens-03-summarization](https://www.kaggle.com/code/bharatchandra1234/telelens-03-summarization) |
+| Factoid QA | [telelens-04-factoid-qa](https://www.kaggle.com/code/bharatchandra1234/telelens-04-factoid-qa) |
+| Integrated system | [telelens-05-integrated](https://www.kaggle.com/code/bharatchandra1234/telelens-05-integrated) |
+
 ## Reproduce the results
 
 The experiments need a GPU, so they are designed to run on Kaggle.
@@ -96,7 +108,7 @@ The experiments need a GPU, so they are designed to run on Kaggle.
 3. Attach the [Comcast complaints dataset](https://www.kaggle.com/datasets/amirizzudin4/comcast-consumer-complaints).
 4. Run all cells. The first cell clones this repository and downloads the public data.
 
-The full set takes roughly one to two hours on a T4 GPU. Seeds are fixed at 42.
+The full set takes roughly one to two hours on a T4 GPU. Seeds are fixed at 42. A second full run reproduced the main results. Only the multi-threaded gensim baselines moved noticeably (FastText sentiment macro-F1 went from 0.863 to 0.857), and DistilBERT's 5% deferral count moved from 892 to 895 reviews.
 
 To use your own Kaggle account from a local machine, set `KAGGLE_USERNAME` and `KAGGLE_API_TOKEN`, change `USER` in [`tools/kaggle_sync.py`](tools/kaggle_sync.py), and run:
 

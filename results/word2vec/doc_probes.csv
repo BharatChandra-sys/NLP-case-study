@@ -1,6 +1,6 @@
 a,b,SGNS (scratch),gensim Word2Vec,FastText,SGNS + negation,PA-W2V
 the service is reliable,the service is not reliable,0.976,0.968,0.972,0.97,0.955
-the connection is stable,the connection is unstable,0.99,0.984,0.993,0.987,0.957
-the engineer was helpful,the engineer was not helpful,0.971,0.964,0.966,0.959,0.946
-my problem was fixed,my problem was not fixed,0.975,0.962,0.967,0.968,0.963
-broadband is slow and keeps disconnecting,internet connection is sluggish and drops,0.962,0.92,0.936,0.965,0.928
+the connection is stable,the connection is unstable,0.99,0.982,0.994,0.987,0.957
+the engineer was helpful,the engineer was not helpful,0.971,0.961,0.967,0.959,0.946
+my problem was fixed,my problem was not fixed,0.975,0.961,0.966,0.968,0.963
+broadband is slow and keeps disconnecting,internet connection is sluggish and drops,0.962,0.924,0.937,0.965,0.928

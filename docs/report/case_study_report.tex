@@ -71,7 +71,7 @@ This report extends an earlier telecom feedback triage prototype, which measured
 Assigned topic & Original contribution & Headline measured result & Evidence\\
 \midrule
 Case Study on Word2Vec (Sec.~\ref{sec:w2v}) & PA-W2V: negation binding and polarity counter-fitting with labels nested in folds & Held-out antonym cosine 0.683 $\rightarrow$ 0.373; neighbour purity 0.773 $\rightarrow$ 0.839 & \repolink{notebooks/01_word2vec.ipynb}{Notebook 01}\\
-Case Study on Sentiment Classification (Sec.~\ref{sec:sent}) & Calibrated selective triage with cross-fitted deferral thresholds & Macro-F1 0.916 ($n$ = 9,874); 5\% risk target met at 4.95\% with 91\% coverage & \repolink{notebooks/02_sentiment_classification.ipynb}{Notebook 02}\\
+Case Study on Sentiment Classification (Sec.~\ref{sec:sent}) & Calibrated selective triage with cross-fitted deferral thresholds & Macro-F1 0.916 ($n$ = 9,874); 5\% risk target met at 4.93\% with 91\% coverage & \repolink{notebooks/02_sentiment_classification.ipynb}{Notebook 02}\\
 Case Study on Text Summarization (Sec.~\ref{sec:sum}) & PAB-MMR: polarity- and aspect-balanced selection; punctuation recovery for unpunctuated text & Polarity gap 0.059 $\rightarrow$ 0.019; aspect recall 0.680 $\rightarrow$ 0.850; ROUGE statistically tied & \repolink{notebooks/03_text_summarization.ipynb}{Notebook 03}\\
 Case Study on Factoid QA (Sec.~\ref{sec:qa}) & Answer-type gating and calibrated abstention over complaints & Overall accuracy 0.477 $\rightarrow$ 0.602; answered EM 0.755; 80\% of unanswerable rejected & \repolink{notebooks/04_factoid_question_answering.ipynb}{Notebook 04}\\
 \bottomrule
@@ -233,7 +233,7 @@ with $c_i=\max(p_i,1-p_i)$. To avoid reporting a threshold chosen on the data it
 \includegraphics[width=0.72\textwidth]{sentiment/risk_coverage.png}
 \caption{Risk against coverage. DistilBERT handles more reviews at every error level.}
 \end{figure}
-Achieved risk tracks the target closely on unseen folds. With DistilBERT at a 5\% target, the system handles 91.0\% of reviews with 4.95\% error and sends 892 of 9,874 to an analyst. The earlier report's fixed-threshold triage has no such control.
+Achieved risk tracks the target closely on unseen folds. With DistilBERT at a 5\% target, the system handles 91.0\% of reviews with 4.93\% error and sends 895 of 9,874 to an analyst. The earlier report's fixed-threshold triage has no such control.
 
 \subsection{Robustness}
 \T{sent_robust}
@@ -342,7 +342,7 @@ Reported scores from different datasets cannot be ranked directly because labels
 Reference & Focus and reported contribution & Relationship to this project\\
 \midrule
 {[}1{]} Abdelmotaleb et al.\ (2026) & Compares TF--IDF, Word2Vec, FastText, Doc2Vec, BERT, classifiers and PCA pooling for telecom star ratings, with computational costs. & Source of the dataset and of the accuracy-versus-cost framing. This project uses the 10K file released with it, not the 367,000-review corpus. It adds selective deferral, summarization and QA.\\
-{[}2{]} Siswa et al.\ (2026) & Compares TF--IDF, Word2Vec and FastText with classical classifiers on 3,441 Indonesian comments; reports 85.2\% for SVM + FastText. & Here FastText was the weakest embedding feature (0.863), which reinforces that representation choice depends on domain and language.\\
+{[}2{]} Siswa et al.\ (2026) & Compares TF--IDF, Word2Vec and FastText with classical classifiers on 3,441 Indonesian comments; reports 85.2\% for SVM + FastText. & Here FastText was the weakest embedding feature (0.857), which reinforces that representation choice depends on domain and language.\\
 {[}3{]} Joseph and Odumuyiwa (2026) & Surveys text representations from classical vectors to sentence embeddings. & Provides the conceptual framing. The pooling result here (Table~\ref{tab:w2vprobe}) illustrates its point about matching representation granularity to the task.\\
 {[}4{]} Khare and Pandey (2026) & Reviews Word2Vec, Bi-LSTM and transformer department classification in healthcare, with overfitting concerns. & Motivates this project's emphasis on leakage control, cross-fitting and held-out evaluation.\\
 \bottomrule
@@ -435,7 +435,21 @@ Integrated outputs and unit tests & \repolink{results/integrated/demo.json}{resu
 \end{table}
 
 \section{Execution Record}
-Excerpts from the Kaggle run logs and unit test output:
+Each notebook's executed run, with its code, cell outputs and log, is public on Kaggle. Each run cloned this repository from GitHub, and the results in this report come from these runs.
+\begin{table}[H]\centering\footnotesize
+\begin{tabular}{lp{10.4cm}}
+\toprule
+Case study & Public Kaggle notebook\\
+\midrule
+Word2Vec & \url{https://www.kaggle.com/code/bharatchandra1234/telelens-01-word2vec}\\
+Sentiment Classification & \url{https://www.kaggle.com/code/bharatchandra1234/telelens-02-sentiment}\\
+Text Summarization & \url{https://www.kaggle.com/code/bharatchandra1234/telelens-03-summarization}\\
+Factoid QA & \url{https://www.kaggle.com/code/bharatchandra1234/telelens-04-factoid-qa}\\
+Integrated system & \url{https://www.kaggle.com/code/bharatchandra1234/telelens-05-integrated}\\
+\bottomrule
+\end{tabular}
+\end{table}
+Excerpts from the run logs and unit test output:
 \begin{lstlisting}
 device cuda Tesla T4
 9874 reviews 617573 tokens 11434 types
@@ -452,6 +466,7 @@ tau 3.2721939086914062
 \item Run all cells. The first cell clones the repository and downloads public data; results are written to \texttt{results/}.
 \item Seeds are fixed at 42. Tables in this report are generated from \texttt{results/} by \repolink{tools/make_tables.py}{make_tables.py}.
 \end{enumerate}
+\textbf{Reproducibility check.} A second complete run from a fresh GitHub clone reproduced the from-scratch SGNS and PA-W2V metrics and the TF--IDF, DistilBERT, summarization and QA headline scores. Two small differences were observed. The gensim baselines train on several threads and are not exactly repeatable: their metrics varied by up to 0.038, and FastText sentiment macro-F1 moved from 0.863 to 0.857. DistilBERT's 5\% deferral count moved from 892 to 895 reviews. No conclusion in this report depends on these differences.
 
 \clearpage
 \section{Selected Implementation Fragment}
