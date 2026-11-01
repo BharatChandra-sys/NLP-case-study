@@ -10,6 +10,8 @@
 
 **Author:** Bharat Chandra Bodapati (Student ID 2023005380)
 
+**Submitted to:** Radha Karampudi, Assistant Professor, Department of Computer Science and Systems Engineering, GITAM School of Computer Science and Engineering, Hyderabad
+
 Telecom teams need to find unhappy customers, understand what customers say in aggregate, and look up facts in old complaints. TeleLens does all three from real public reviews. It also measures its failures and declines to decide when its evidence is weak.
 
 **[Read the full report (PDF)](docs/case_study_report.pdf)**
