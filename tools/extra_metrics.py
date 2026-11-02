@@ -19,7 +19,7 @@ def main():
         tn, fp, fn, tp = confusion_matrix(y, pred).ravel()
         folds = [f1_score(y[d.fold == k], pred[d.fold == k], average="macro") for k in sorted(d.fold.unique())]
         rows.append({"model": model, "roc_auc": roc_auc_score(y, p), "pr_auc_bad": average_precision_score(1 - y, 1 - p), "mcc": matthews_corrcoef(y, pred),
-                     "kappa": cohen_kappa_score(y, pred), "balanced_accuracy": balanced_accuracy_score(y, pred), "specificity_good": tp / (tp + fn),
+                     "kappa": cohen_kappa_score(y, pred), "balanced_accuracy": balanced_accuracy_score(y, pred), "recall_good": tp / (tp + fn),
                      "brier": brier_score_loss(y, p), "log_loss": log_loss(y, np.clip(p, 1e-6, 1 - 1e-6)), "fold_f1_mean": np.mean(folds), "fold_f1_std": np.std(folds)})
         confusion.append({"model": model, "bad_as_bad": tn, "bad_as_good": fp, "good_as_bad": fn, "good_as_good": tp})
         order = np.argsort(p)
@@ -27,6 +27,7 @@ def main():
         for k in (100, 500, 1000, 2000):
             row[f"bad_hit@{k}"] = float((y[order[:k]] == 0).mean())
         row["bad_recall@2000"] = float((y[order[:2000]] == 0).sum() / (y == 0).sum())
+        row["first_good_rank"] = int(np.argmax(y[order] == 1)) + 1
         queue.append(row)
     frame = pd.DataFrame(rows).sort_values("roc_auc", ascending=False)
     frame.to_csv(RES / "extra_metrics.csv", index=False)

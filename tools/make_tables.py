@@ -152,9 +152,9 @@ def extended():
           ["Model", "Bad as Bad", "Bad as Good", "Good as Bad", "Good as Good"],
           [[esc(m), f"{r.bad_as_bad:,}", f"{r.bad_as_good:,}", f"{r.good_as_bad:,}", f"{r.good_as_good:,}"] for m, r in c.iterrows()], bold_rows=[0], size="footnotesize")
     q = pd.read_csv(s / "triage_queue_hits.csv").set_index("model").loc[e.model]
-    write("sent_queue", "Triage queue hit rate: reviews are ranked by predicted negativity and the share of the top $k$ that are truly Bad is reported.", "tab:sentqueue", "lccccc",
-          ["Model", "Hit@100", "Hit@500", "Hit@1000", "Hit@2000", "Bad recall@2000"],
-          [[esc(m), num(r["bad_hit@100"]), num(r["bad_hit@500"]), num(r["bad_hit@1000"]), num(r["bad_hit@2000"]), num(r["bad_recall@2000"])] for m, r in q.iterrows()], bold_rows=[0], size="footnotesize")
+    write("sent_queue", "Triage queue hit rate: reviews are ranked by predicted negativity and the share of the top $k$ that are truly Bad is reported. A queue of 2,000 can hold at most 40.2\\% of the 4,972 Bad reviews, so Bad recall@2000 cannot exceed 0.402.", "tab:sentqueue", "lcccccc",
+          ["Model", "Hit@100", "Hit@500", "Hit@1000", "Hit@2000", "Recall@2000", "First Good"],
+          [[esc(m), num(r["bad_hit@100"]), num(r["bad_hit@500"]), num(r["bad_hit@1000"]), num(r["bad_hit@2000"]), num(r["bad_recall@2000"]), f"{int(r['first_good_rank'])}"] for m, r in q.iterrows()], bold_rows=[0], size="footnotesize")
     f = pd.read_csv(RES / "summarization" / "fewsum_scores.csv")
     write("sum_detail", "FewSum test: ROUGE precision and recall, word-distribution distance from the source, and sentiment agreement with the star ratings.", "tab:fewsumdetail", "lcccccc",
           ["Method", "R-1 P", "R-1 R", "R-2 P", "R-2 R", "Unigram JS", "Sentiment hit"],

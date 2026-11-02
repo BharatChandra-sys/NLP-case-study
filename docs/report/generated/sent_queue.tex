@@ -1,21 +1,21 @@
 \begin{table}[H]
 \centering
 \footnotesize
-\caption{Triage queue hit rate: reviews are ranked by predicted negativity and the share of the top $k$ that are truly Bad is reported.}
+\caption{Triage queue hit rate: reviews are ranked by predicted negativity and the share of the top $k$ that are truly Bad is reported. A queue of 2,000 can hold at most 40.2\% of the 4,972 Bad reviews, so Bad recall@2000 cannot exceed 0.402.}
 \label{tab:sentqueue}
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccccc}
 \toprule
-Model & Hit@100 & Hit@500 & Hit@1000 & Hit@2000 & Bad recall@2000 \\
+Model & Hit@100 & Hit@500 & Hit@1000 & Hit@2000 & Recall@2000 & First Good \\
 \midrule
-\textbf{DistilBERT fine-tuned} & \textbf{1.000} & \textbf{0.998} & \textbf{0.995} & \textbf{0.993} & \textbf{0.399} \\
-TF-IDF LR & 1.000 & 0.994 & 0.994 & 0.988 & 0.397 \\
-TF-IDF + PA-W2V & 0.990 & 0.992 & 0.991 & 0.985 & 0.396 \\
-TF-IDF + SGNS & 0.980 & 0.986 & 0.989 & 0.982 & 0.395 \\
-PA-W2V mean LR & 0.970 & 0.986 & 0.972 & 0.965 & 0.388 \\
-SGNS+neg mean LR & 0.960 & 0.976 & 0.977 & 0.970 & 0.390 \\
-SGNS mean LR & 0.980 & 0.962 & 0.967 & 0.962 & 0.387 \\
-FastText mean LR & 0.950 & 0.960 & 0.968 & 0.961 & 0.386 \\
-DistilBERT SST-2 (no training) & 1.000 & 0.970 & 0.958 & 0.938 & 0.377 \\
+\textbf{DistilBERT fine-tuned} & \textbf{1.000} & \textbf{0.998} & \textbf{0.995} & \textbf{0.993} & \textbf{0.399} & \textbf{470} \\
+TF-IDF LR & 1.000 & 0.994 & 0.994 & 0.988 & 0.397 & 294 \\
+TF-IDF + PA-W2V & 0.990 & 0.992 & 0.991 & 0.985 & 0.396 & 94 \\
+TF-IDF + SGNS & 0.980 & 0.986 & 0.989 & 0.982 & 0.395 & 42 \\
+PA-W2V mean LR & 0.970 & 0.986 & 0.972 & 0.965 & 0.388 & 50 \\
+SGNS+neg mean LR & 0.960 & 0.976 & 0.977 & 0.970 & 0.390 & 21 \\
+SGNS mean LR & 0.980 & 0.962 & 0.967 & 0.962 & 0.387 & 10 \\
+FastText mean LR & 0.950 & 0.960 & 0.968 & 0.961 & 0.386 & 4 \\
+DistilBERT SST-2 (no training) & 1.000 & 0.970 & 0.958 & 0.938 & 0.377 & 115 \\
 \bottomrule
 \end{tabular}
 \end{table}
