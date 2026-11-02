@@ -212,6 +212,17 @@ class QAPipeline:
                             "evidence": contexts[position], "type": kind}
         return best, ranked
 
+    def ranked_answers(self, question, gate=True, retrieval_weight=2.0):
+        _, _, _, all_spans = self.read(question)
+        kind = answer_type(question)
+        scores = {}
+        for position, spans in enumerate(all_spans):
+            for span in spans:
+                if not gate or passes_gate(kind, span["text"]):
+                    score = span["margin"] + retrieval_weight / (position + 1)
+                    scores[span["text"]] = max(score, scores.get(span["text"], -1e9))
+        return sorted(scores, key=scores.get, reverse=True)
+
 
 def rule_answer(question, retriever, mode="bm25", top_k=5):
     kind = answer_type(question)

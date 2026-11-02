@@ -1,8 +1,10 @@
 import itertools
+from collections import Counter
 
 import networkx as nx
 import numpy as np
 from rouge_score import rouge_scorer
+from scipy.spatial.distance import jensenshannon
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import normalize
@@ -122,7 +124,22 @@ def lexicon_aspects(sentences, lexicon):
 
 def rouge_multi(summary, references):
     scores = [ROUGE.score(ref, summary) for ref in references]
-    return {k: float(np.mean([s[k].fmeasure for s in scores])) for k in ("rouge1", "rouge2", "rougeL")}
+    output = {k: float(np.mean([s[k].fmeasure for s in scores])) for k in ("rouge1", "rouge2", "rougeL")}
+    for k in ("rouge1", "rouge2"):
+        output[f"{k}_p"] = float(np.mean([s[k].precision for s in scores]))
+        output[f"{k}_r"] = float(np.mean([s[k].recall for s in scores]))
+    return output
+
+
+def unigram_js(summary, source):
+    a, b = Counter(summary.lower().split()), Counter(source.lower().split())
+    vocab = sorted(set(a) | set(b))
+    return float(jensenshannon([a[w] for w in vocab], [b[w] for w in vocab], base=2) ** 2)
+
+
+def weighted_polarity(polarity, sentences, chosen):
+    lengths = np.array([word_count(sentences[i]) for i in chosen], dtype=float)
+    return float(np.average(polarity[chosen], weights=lengths)) if len(chosen) else 0.5
 
 
 def redundancy(vectors, chosen):

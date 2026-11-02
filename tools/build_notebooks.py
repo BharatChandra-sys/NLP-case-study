@@ -74,7 +74,21 @@ HELD_OUT = frozenset(SYNONYMS + ANTONYMS + NEGATED)
 simlex = load_simlex()
 
 
+def pair_hits(emb, pairs, k=10):
+    ranks = []
+    for a, b in pairs:
+        if a in emb and b in emb:
+            ordered = [w for w, _ in emb.neighbours(a, len(emb.words))]
+            ranks.append(ordered.index(b) + 1)
+    if not ranks:
+        return np.nan, np.nan
+    return float(np.mean([r <= k for r in ranks])), float(np.mean([1 / r for r in ranks]))
+
+
 def pair_metrics(emb):
+    syn_hit, syn_mrr = pair_hits(emb, SYNONYMS)
+    ant_hit, ant_mrr = pair_hits(emb, ANTONYMS)
+    neg_hit, _ = pair_hits(emb, NEGATED)
     syn = [emb.cosine(a, b) for a, b in SYNONYMS]
     ant = [emb.cosine(a, b) for a, b in ANTONYMS]
     neg = [emb.cosine(a, b) for a, b in NEGATED]
@@ -82,7 +96,8 @@ def pair_metrics(emb):
     rows = [(s, 1) for s in syn] + [(a, 0) for a in ant]
     sims = [(emb.cosine(a, b), g) for a, b, g in simlex.itertuples(index=False)]
     sims = [(c, g) for c, g in sims if c is not None]
-    return {"syn_mean": np.mean(syn), "ant_mean": np.mean(ant), "neg_mean": np.mean(neg) if neg else np.nan,
+    return {"syn_hit10": syn_hit, "syn_mrr": syn_mrr, "ant_hit10": ant_hit, "ant_mrr": ant_mrr, "neg_hit10": neg_hit,
+            "syn_mean": np.mean(syn), "ant_mean": np.mean(ant), "neg_mean": np.mean(neg) if neg else np.nan,
             "syn_ant_auc": roc_auc_score([r[1] for r in rows], [r[0] for r in rows]),
             "simlex_rho": spearmanr([s[0] for s in sims], [s[1] for s in sims]).statistic, "simlex_pairs": len(sims)}
 
@@ -408,12 +423,19 @@ def fewsum_outputs(g, i):
     return {"Lead": text_of(g, S.lead(s, BUDGET)), "Centroid": text_of(g, S.centroid(v, s, BUDGET)), "TextRank": text_of(g, S.textrank(v, s, BUDGET)),
             "MMR (tuned)": text_of(g, run_pab(g, best_mmr.lam, 0.0, 0.0)), "PAB-MMR (tuned)": text_of(g, run_pab(g, best_pab.lam, best_pab.beta, best_pab.eta)),
             "PAB-MMR (fixed)": text_of(g, run_pab(g, **FIXED)), "BART-large-CNN": bart[i]}
-rows, gaps, samples = [], [], []
+rows, gaps, samples, texts = [], [], [], []
 for i, g in enumerate(prepared_test):
     outputs = fewsum_outputs(g, i)
     for name, summary in outputs.items():
-        rows.append({"group": i, "method": name, "words": S.word_count(summary), **S.rouge_multi(summary, g["references"])})
+        texts.append(summary)
+        rows.append({"group": i, "method": name, "words": S.word_count(summary), **S.rouge_multi(summary, g["references"]),
+                     "unigram_js": S.unigram_js(summary, " ".join(g["reviews"])), "target": g["target"]})
     samples.append({"group": test_groups[i]["group"], **outputs, "reference": g["references"][0]})
+summary_polarity = pretrained_sst2(texts, DEVICE)
+for row, value in zip(rows, summary_polarity):
+    row["polarity_gap"] = js_binary(float(value), row["target"])
+    row["sentiment_hit"] = float((value >= 0.5) == (row["target"] >= 0.5))
+    del row["target"]
 fewsum = pd.DataFrame(rows)
 fewsum.to_csv(RESULTS / "fewsum_by_group.csv", index=False)
 agg = fewsum.drop(columns="group").groupby("method", sort=False).mean()
@@ -515,17 +537,22 @@ for c, (provider, aspect, docs, sentences, vectors, polarity, aspect_labels, sub
         rows.append({"cluster": c, "provider": provider, "aspect": aspect, "method": name, "target_share_good": target,
                      "polarity_gap": S.polarity_gap(polarity, sentences, chosen, target), "aspect_recall": S.aspect_recall(facets, chosen),
                      "redundancy": S.redundancy(vectors, chosen), "words": sum(S.word_count(sentences[i]) for i in chosen),
-                     "centroid_cosine": float(np.dot(vectors[chosen].mean(0), centre) / (np.linalg.norm(vectors[chosen].mean(0)) * np.linalg.norm(centre) + 1e-9))})
+                     "centroid_cosine": float(np.dot(vectors[chosen].mean(0), centre) / (np.linalg.norm(vectors[chosen].mean(0)) * np.linalg.norm(centre) + 1e-9)),
+                     "sentiment_hit": float((S.weighted_polarity(polarity, sentences, chosen) >= 0.5) == (target >= 0.5)),
+                     "unigram_js": S.unigram_js(" ".join(sentences[i] for i in chosen), " ".join(sentences)),
+                     "compression": sum(S.word_count(sentences[i]) for i in chosen) / sum(map(S.word_count, sentences))})
     summary = bart_telecom[c]
     bart_segments = S.filter_sentences(split_sentences(summary)) or [summary]
     bart_polarity = global_model.predict_proba(global_vectorizer.transform(bart_segments))[:, 1]
     rows.append({"cluster": c, "provider": provider, "aspect": aspect, "method": "BART-large-CNN", "target_share_good": target, "polarity_gap": js_binary(float(bart_polarity.mean()), target),
-                 "aspect_recall": np.nan, "redundancy": np.nan, "words": S.word_count(summary), "centroid_cosine": np.nan, "novel_token_rate": S.novel_token_rate(summary, bart_inputs[c])})
+                 "aspect_recall": np.nan, "redundancy": np.nan, "words": S.word_count(summary), "centroid_cosine": np.nan, "novel_token_rate": S.novel_token_rate(summary, bart_inputs[c]),
+                 "sentiment_hit": float((bart_polarity.mean() >= 0.5) == (target >= 0.5)), "unigram_js": S.unigram_js(summary, bart_inputs[c]),
+                 "compression": S.word_count(summary) / S.word_count(bart_inputs[c])})
     if aspect == "all":
         examples.append({"provider": provider, "share_good": target, "PAB-MMR": " | ".join(sentences[i] for i in picks["PAB-MMR"]), "MMR": " | ".join(sentences[i] for i in picks["MMR"]), "BART": summary})
 telecom = pd.DataFrame(rows)
 telecom.to_csv(RESULTS / "telecom_by_cluster.csv", index=False)
-telecom_agg = telecom.groupby("method", sort=False)[["polarity_gap", "aspect_recall", "redundancy", "centroid_cosine", "words", "novel_token_rate"]].mean()
+telecom_agg = telecom.groupby("method", sort=False)[["polarity_gap", "aspect_recall", "redundancy", "centroid_cosine", "words", "novel_token_rate", "sentiment_hit", "unigram_js", "compression"]].mean()
 telecom_agg.to_csv(RESULTS / "telecom_scores.csv")
 pd.DataFrame(examples).to_csv(RESULTS / "telecom_digests.csv", index=False)
 tests = []
@@ -682,6 +709,31 @@ display(ablation.round(4), selective, no_abstain, by_type.round(4))"""),
 ("code", """errors = answerable[answerable.em == 0][["question", "gold", "prediction", "f1", "doc_id", "gold_doc"]]
 errors.to_csv(RESULTS / "test_errors.csv", index=False)
 errors.head(15)"""),
+("md", "## Extra held-out metrics: answer Hit@k, answerability AUROC, rejection F1, error sources"),
+("code", """from sklearn.metrics import average_precision_score, roc_auc_score
+from telelens.metrics import mcnemar_exact, rejection_scores
+
+answer_hits = {}
+gate_flag, gold_answerable = bool(chosen.gate), [g for g in test if g["answerable"]]
+for k in (1, 3, 5, 10):
+    answer_hits[f"hit@{k}"] = float(np.mean([any(exact_match(a, g["answers"]) for a in best_pipeline.ranked_answers(g["question"], gate_flag, weight)[:k]) for g in gold_answerable]))
+    answer_hits[f"f1_hit@{k}"] = float(np.mean([any(token_f1(a, g["answers"]) >= 0.5 for a in best_pipeline.ranked_answers(g["question"], gate_flag, weight)[:k]) for g in gold_answerable]))
+labels = [int(r["answerable"]) for r in test_results]
+scores = [max(r["score"], -50.0) for r in test_results]
+right_doc = answerable["doc_id"] == answerable["gold_doc"]
+no_gate_results = evaluate(best_pipeline, test, False, weight)
+gate_em = np.array([r["em"] for r in test_results if r["answerable"]])
+no_gate_em = np.array([r["em"] for r in no_gate_results if r["answerable"]])
+gold_ones = np.ones(len(gate_em))
+gate_only, no_gate_only, gate_p = mcnemar_exact(gold_ones, gate_em, no_gate_em)
+correct_overall = [(r["em"] if r["score"] >= tau else 0.0) if r["answerable"] else float(r["score"] < tau) for r in test_results]
+extra = {"answer_hits": answer_hits, "answerability_auroc": roc_auc_score(labels, scores), "answerability_ap": average_precision_score(labels, scores),
+         "rejection": rejection_scores(test_results, tau), "overall_accuracy_ci": bootstrap_ci(correct_overall),
+         "right_document_rate": float(right_doc.mean()), "em_given_right_document": float(answerable[right_doc].em.mean()), "em_given_wrong_document": float(answerable[~right_doc].em.mean()),
+         "errors_wrong_document": int(((answerable.em == 0) & ~right_doc).sum()), "errors_right_document": int(((answerable.em == 0) & right_doc).sum()),
+         "gate_vs_no_gate": {"gate_only_correct": gate_only, "no_gate_only_correct": no_gate_only, "mcnemar_p": gate_p}}
+save_json("qa_extra.json", extra)
+print(json.dumps(extra, indent=1, default=float))"""),
 ]
 
 DEMO = [
