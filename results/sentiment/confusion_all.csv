@@ -1,0 +1,10 @@
+model,bad_as_bad,bad_as_good,good_as_bad,good_as_good
+TF-IDF LR,4572,400,618,4284
+SGNS mean LR,4484,488,781,4121
+FastText mean LR,4448,524,884,4018
+SGNS+neg mean LR,4493,479,727,4175
+PA-W2V mean LR,4548,424,707,4195
+TF-IDF + SGNS,4562,410,669,4233
+TF-IDF + PA-W2V,4583,389,642,4260
+DistilBERT fine-tuned,4524,448,383,4519
+DistilBERT SST-2 (no training),4830,142,1605,3297

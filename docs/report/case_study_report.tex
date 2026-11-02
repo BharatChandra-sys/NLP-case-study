@@ -19,9 +19,12 @@
 \pagestyle{fancy}\fancyhf{}
 \lhead{TeleLens: Telecom Feedback Intelligence}\rhead{NLP Case Study}\cfoot{\thepage}
 \setlength{\headheight}{14pt}
-\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible,keepspaces=true}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,columns=fullflexible,keepspaces=true,numbers=left,numberstyle=\tiny,numbersep=4pt,xleftmargin=12pt,framexleftmargin=12pt,language=Python,keywordstyle=\bfseries,showstringspaces=false,captionpos=t,aboveskip=8pt,belowskip=8pt}
+\renewcommand{\lstlistingname}{Code}
 \graphicspath{{../../results/}}
 \newcommand{\T}[1]{\input{generated/#1}}
+\newcommand{\codefile}[3]{\par\vspace{0pt plus 3.5cm}\penalty-100\vspace{0pt plus -3.5cm}\lstinputlisting[caption={#2 (\texttt{src/telelens/#3})}]{generated/code/#1.py}}
+\newenvironment{csabstract}{\begin{quote}\small\textbf{Abstract.}\ }{\end{quote}}
 
 \begin{document}
 \sloppy
@@ -132,6 +135,42 @@ The WEDataset repository declares no licence, so the raw file is downloaded at r
 \item \textbf{Paired statistics.} Bootstrap confidence intervals, exact McNemar tests and Wilcoxon signed-rank tests support each comparison.
 \end{itemize}
 
+\subsection{Metrics and why each is used}
+No single number describes a language system, so each task is measured on several complementary metrics.
+\begin{table}[H]\centering\footnotesize
+\caption{Metrics used in this report.}\label{tab:metrics}
+\begin{tabular}{p{3.1cm}p{7.6cm}p{3.2cm}}
+\toprule
+Metric & Meaning & Used for\\
+\midrule
+Macro-F1, accuracy & Class-balanced harmonic mean of precision and recall; share correct & Sentiment\\
+ROC-AUC, PR-AUC & Ranking quality across all thresholds & Sentiment, answerability\\
+MCC, Cohen's $\kappa$ & Agreement corrected for chance; MCC uses all four confusion cells & Sentiment\\
+Brier, log loss, ECE & Quality of probabilities and gap between confidence and accuracy & Calibration\\
+Risk and coverage & Error on handled items and share handled & Selective triage, abstention\\
+Hit@$k$ & Whether a correct item appears in the top $k$ results & Retrieval, answers, triage queue, word neighbours\\
+MRR, nDCG@10 & Reward for placing the correct item high in the ranking & Retrieval\\
+Exact match, token F1 & Standard SQuAD answer scores & Factoid QA\\
+ROUGE P/R/F & Word and bigram overlap with human references & Summarization\\
+Polarity gap, sentiment hit & JS divergence from true sentiment share; agreement on majority sentiment & Summary fidelity\\
+Aspect recall, redundancy & Topic coverage; mean similarity between selected sentences & Summary quality\\
+Boundary P/R/F & Recovery of true sentence boundaries & Segmentation\\
+Cosine, AUC, purity, SimLex $\rho$ & Word-pair similarity, synonym--antonym separation, neighbour polarity & Word2Vec\\
+\bottomrule
+\end{tabular}
+\end{table}
+For a question with one relevant document at rank $r_q$ over a question set $Q$, the ranking metrics are
+\begin{equation}
+\mathrm{Hit@}k=\frac{1}{|Q|}\sum_{q}\mathbf{1}[r_q\le k],\quad
+\mathrm{MRR}=\frac{1}{|Q|}\sum_{q}\frac{1}{r_q},\quad
+\mathrm{nDCG@}10=\frac{1}{|Q|}\sum_{q}\frac{\mathbf{1}[r_q\le 10]}{\log_2(r_q+1)},
+\end{equation}
+and the Matthews correlation coefficient and Brier score are
+\begin{equation}
+\mathrm{MCC}=\frac{TP\cdot TN-FP\cdot FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}},\qquad
+\mathrm{Brier}=\frac{1}{n}\sum_i(p_i-y_i)^2.
+\end{equation}
+
 \section{System Architecture}
 \begin{figure}[H]\centering
 \begin{tikzpicture}[font=\footnotesize,box/.style={draw,rounded corners=2pt,minimum height=8mm,align=center,fill=blue!6},
@@ -148,9 +187,29 @@ The WEDataset repository declares no licence, so the raw file is downloaded at r
 \end{tikzpicture}
 \caption{TeleLens architecture. Embeddings feed the downstream tasks; sentence polarity from the sentiment model feeds the summarizer (dashed).}
 \end{figure}
-Core logic is in \treelink{src/telelens}{src/telelens}, one module per task. Notebooks in \treelink{notebooks}{notebooks} run the experiments, and \repolink{src/telelens/pipeline.py}{pipeline.py} exposes three operations: \texttt{triage}, \texttt{digest} and \texttt{ask}. Heavy computation ran on Kaggle (Tesla T4 GPU); the local machine holds code and pulled outputs.
+Core logic is in \treelink{src/telelens}{src/telelens}, one module per task. Notebooks in \treelink{notebooks}{notebooks} run the experiments, and \repolink{src/telelens/pipeline.py}{pipeline.py} exposes three operations: \texttt{triage}, \texttt{digest} and \texttt{ask}. Heavy computation ran on Kaggle (Tesla T4 GPU); the local machine holds code and pulled outputs. The code listings below are extracted automatically from the repository source by \repolink{tools/make_code_listings.py}{make_code_listings.py}, so they are exactly the code that ran.
+\begin{table}[H]\centering\footnotesize
+\caption{Implementation settings.}\label{tab:settings}
+\begin{tabular}{p{3.3cm}p{11.0cm}}
+\toprule
+Component & Settings\\
+\midrule
+SGNS & 200 dimensions, window 5, 10 negatives, 5 epochs, minimum count 5, subsampling $10^{-3}$, SparseAdam at 0.002, batch 8,192\\
+Counter-fitting & $|z|\ge 2.58$, 10 neighbours, repel weight 1, attract weight 0.3, anchor weight 1, attract margin 0.6, 300 Adam steps at 0.01\\
+TF--IDF classifier & Unigrams and bigrams, minimum document frequency 2, 50,000 features, sublinear TF, logistic regression $C=4$, Platt scaling\\
+DistilBERT & \texttt{distilbert-base-uncased}, 2 epochs, batch 32, learning rate $2\times10^{-5}$, 256 tokens, temperature scaling\\
+PAB-MMR & 50-word budget; tuned $\lambda=0.9,\beta=0,\eta=0.5$; telecom $\lambda=0.7,\beta=0.3,\eta=0.5$\\
+Punctuation model & \texttt{oliverguhr/fullstop-punctuation-multilang-large}, 200-word windows\\
+BM25 and retrieval & $k_1=1.5$, $b=0.75$; passages of 3 sentences with stride 2; reranking weight 0.25 on BM25's top 100\\
+Reader and abstention & \texttt{deepset/roberta-base-squad2}, 384 tokens, top 10 passages, retrieval bonus $w=2$, $\tau=3.27$\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Case Study 1: Word2Vec}\label{sec:w2v}
+\begin{csabstract}
+Word2Vec represents a word by the contexts it occurs in, which also places opposites such as \emph{stable} and \emph{unstable} close together. This case study implements skip-gram with negative sampling from scratch and introduces Polarity-Aware Word2Vec (PA-W2V), which adds negation binding and polarity counter-fitting learned only from training-fold labels. On 9,874 telecom reviews under grouped five-fold validation, with evaluation word pairs excluded from fitting, mean antonym cosine fell from 0.683 to 0.373, antonyms among the ten nearest neighbours fell from 0.087 to 0.013, and neighbour polarity purity rose from 0.773 to 0.839. Embedding-based sentiment macro-F1 rose from 0.871 to 0.885. The gain has costs: synonym Hit@10 fell from 0.587 to 0.560, SimLex-999 did not improve, and mean pooling hides much of the effect at sentence level.
+\end{csabstract}
 \subsection{Theory}
 Skip-gram with negative sampling (SGNS) [5,6] learns a target vector $\mathbf{v}_w$ and context vector $\mathbf{u}_c$. For an observed pair $(w,c)$ and $K$ noise words drawn from $P_n(w)\propto \mathrm{count}(w)^{3/4}$ it minimises
 \begin{equation}
@@ -177,8 +236,25 @@ Among words with $|z_w|\ge 2.58$, each word's ten nearest polar neighbours gener
 \end{equation}
 where the first term preserves the original space, with $\alpha=1$, $\rho=1$, $\kappa=0.3$ and $\mu=0.6$. Because cosine lies in $[-1,1]$ the repel term is zero exactly when a pair is orthogonal or opposed, so the loss stops pushing a pair once it is separated. The original method relies on external lexicons [8]; here constraints are derived from the corpus and its labels inside each fold.
 
-\subsection{Implementation}
-SGNS is written from scratch in PyTorch (\repolink{src/telelens/embeddings.py}{embeddings.py}): 200 dimensions, window 5, 10 negatives, 5 epochs, minimum count 5, subsampling $10^{-3}$, SparseAdam. Gensim Word2Vec and FastText with matching settings provide library baselines. Counter-fitting weights were selected on an inner validation split (Table~\ref{tab:w2vtune}); validation macro-F1 varied little, so this choice has limited influence.
+\subsection{Implementation and logic}
+The pipeline runs inside each training fold:
+\begin{enumerate}
+\item \textbf{Tokenize.} Lowercase, remove apostrophes and map numbers to \texttt{<num>}.
+\item \textbf{Bind negation.} Join each negator to the next content word, skipping articles and intensifiers.
+\item \textbf{Train SGNS.} Sample context pairs with a random window, sample negatives from the $3/4$-power noise distribution, and minimise Equation~(3) with sparse gradients on the GPU.
+\item \textbf{Score polarity.} Calculate $z_w$ from training-fold labels only.
+\item \textbf{Build constraints.} Create repel and attract pairs from polar neighbours and lexical antonyms, removing every evaluation pair.
+\item \textbf{Counter-fit.} Minimise $\mathcal{L}_{\mathrm{PA}}$ with Adam, then renormalise the vectors.
+\end{enumerate}
+\codefile{bind_negation}{Negation binding}{text.py}
+Scanning left to right, a negator followed by a content word yields one token such as \texttt{not\_helpful}. Function words after a negator, as in ``not to'', are left unchanged, so only meaningful negations receive their own vectors.
+\codefile{train_sgns}{Skip-gram with negative sampling, written from scratch}{embeddings.py}
+Two embedding tables hold target and context vectors. Frequent words are subsampled, and each batch computes the positive term and $K$ negative terms of the SGNS loss in parallel using a batched matrix product, which is why training a fold takes seconds on a GPU.
+\codefile{log_odds}{Polarity score from training labels}{embeddings.py}
+\codefile{counterfit}{Polarity counter-fitting}{embeddings.py}
+The loss has three parts: an anchor keeps vectors near the originals, a hinge pushes repel pairs until their cosine reaches zero, and a second hinge pulls attract pairs up to the margin. Removing \texttt{held\_out} pairs before optimisation is what makes the evaluation honest.
+
+Gensim Word2Vec and FastText with matching settings provide library baselines. Counter-fitting weights were selected on an inner validation split (Table~\ref{tab:w2vtune}); validation macro-F1 varied little, so this choice has limited influence.
 \T{w2v_tuning}
 
 \subsection{Results}
@@ -195,6 +271,8 @@ Table~\ref{tab:w2v} uses 16 synonym, 16 antonym and 10 negation pairs that were 
 \item \textbf{No change on SimLex-999 [27].} Spearman $\rho$ stays near 0.10 for all models. SimLex is general English, and the corpus is small and domain-specific, so this benchmark shows no gain.
 \item \textbf{Pooling dilutes the effect.} Table~\ref{tab:w2vprobe} shows sentence cosine remains high after mean pooling, as most words are shared. The earlier report's concern is reduced at the word level but not solved at sentence level.
 \end{itemize}
+\T{w2v_hits}
+Table~\ref{tab:w2vhits} shows the trade-off in ranking terms. PA-W2V almost removes antonyms from the ten nearest neighbours (0.087 to 0.013, and FastText's 0.325 is far worse), but it retrieves slightly fewer synonyms (0.587 to 0.560). Gensim Word2Vec has the highest synonym Hit@10 (about 0.76) while admitting more antonyms, so no model wins on every measure.
 \T{w2v_probes}
 \begin{figure}[H]\centering
 \includegraphics[width=0.92\textwidth]{word2vec/word2vec_pca.png}
@@ -204,11 +282,37 @@ Table~\ref{tab:w2v} uses 16 synonym, 16 antonym and 10 negation pairs that were 
 Table~\ref{tab:w2vnn} also shows limits: \emph{lacking} and \emph{pricey} appear near positive words, reflecting co-occurrence rather than meaning. Small-corpus embeddings remain noisy.
 
 \section{Case Study 2: Sentiment Classification}\label{sec:sent}
+\begin{csabstract}
+Support teams need negative feedback found quickly and need to know when a prediction can be trusted. This case study compares nine classifiers on 9,874 telecom reviews under grouped five-fold validation, from TF--IDF and embedding features to fine-tuned DistilBERT, and adds calibrated selective triage with cross-fitted thresholds. Fine-tuned DistilBERT performs best, with macro-F1 0.916, ROC-AUC 0.974 and MCC 0.832, and is significantly better than TF--IDF (macro-F1 0.897). When reviews are ranked by predicted negativity, its top 100 are all truly negative and its top 500 are 99.8\% negative. At a 5\% risk target on unseen folds, the system achieved 4.93\% error while handling 90.9\% of reviews automatically. PA-W2V significantly improves embedding-only models, but adding it to TF--IDF gave no measurable gain, and idiomatic negation still defeats every model.
+\end{csabstract}
 \subsection{Methods}
 Reviews are labelled Bad or Good from star ratings. All models use the same grouped folds. Linear models use logistic regression with Platt calibration [14] fitted inside the training fold. DistilBERT [12] is fine-tuned for two epochs (learning rate $2\times10^{-5}$, 256 tokens) and calibrated by temperature scaling [13] on a 10\% validation split; fitted temperatures of 1.09--1.29 confirm mild overconfidence before calibration. An untrained SST-2 DistilBERT measures what domain training adds.
 
+\subsection{Implementation and logic}
+\begin{enumerate}
+\item \textbf{Split.} Create grouped folds so identical texts never cross the train and test boundary.
+\item \textbf{Fit inside the fold.} Fit vectorizers, embeddings, polarity scores and classifiers on the training part only.
+\item \textbf{Calibrate.} Use Platt scaling for linear models and temperature scaling for DistilBERT.
+\item \textbf{Save.} Store every review's out-of-fold probability, so all metrics can be recalculated without retraining.
+\item \textbf{Decide.} Choose a confidence threshold from the other folds, then automate or defer each review.
+\end{enumerate}
+\codefile{fit_temperature}{Temperature scaling}{sentiment.py}
+Temperature scaling divides the logits by one learned value $T$, chosen to minimise cross-entropy on validation data. This changes confidence but never changes which class is predicted.
+\codefile{threshold}{Choosing the threshold for a target risk}{metrics.py}
+\begin{lstlisting}[caption={Cross-fitted deferral (\texttt{notebooks/02\_sentiment\_classification.ipynb})}]
+kept = np.zeros(len(y), dtype=bool)
+for k in range(5):
+    tau = threshold_for_risk(y[fold_of != k], p[fold_of != k], target)
+    kept[fold_of == k] = np.maximum(p[fold_of == k], 1 - p[fold_of == k]) >= tau
+\end{lstlisting}
+The threshold for fold $k$ is learned only from the other folds, so the achieved risk in Table~\ref{tab:selective} is measured on reviews that played no part in choosing it.
+
 \subsection{Results}
 \T{sent_scores}
+\T{sent_extra}
+\T{sent_confusion}
+\T{sent_queue}
+Table~\ref{tab:sentqueue} is the most direct measure of triage value. Ranking all reviews by predicted negativity, the top 100 are all truly Bad for DistilBERT, TF--IDF and the untrained SST-2 model, a \textbf{perfect Hit@100}. This perfect score applies only to the most confident 1\% of reviews: DistilBERT's hit rate falls to 0.998 at 500 and 0.993 at 2,000, where the queue contains 39.9\% of all Bad reviews. The ROC-AUC of 0.974 confirms that strong ranking extends beyond the top of the list, while the SST-2 model's Brier score of 0.166 shows that a good ranking can still have poor probabilities.
 \begin{figure}[H]\centering
 \includegraphics[width=0.72\textwidth]{sentiment/model_f1.png}
 \caption{Out-of-fold macro-F1. The axis starts at 0.6 to show differences between models.}
@@ -233,13 +337,16 @@ with $c_i=\max(p_i,1-p_i)$. To avoid reporting a threshold chosen on the data it
 \includegraphics[width=0.72\textwidth]{sentiment/risk_coverage.png}
 \caption{Risk against coverage. DistilBERT handles more reviews at every error level.}
 \end{figure}
-Achieved risk tracks the target closely on unseen folds. With DistilBERT at a 5\% target, the system handles 91.0\% of reviews with 4.93\% error and sends 895 of 9,874 to an analyst. The earlier report's fixed-threshold triage has no such control.
+Achieved risk tracks the target closely on unseen folds. With DistilBERT at a 5\% target, the system handles 90.9\% of reviews with 4.93\% error and sends 895 of 9,874 to an analyst. The earlier report's fixed-threshold triage has no such control.
 
 \subsection{Robustness}
 \T{sent_robust}
 On 30 authored minimal pairs, DistilBERT is correct on 86.7\%, compared with 66.7\% for TF--IDF. Embedding features help on simple negation (``the engineer was not helpful'' receives $P(\mathrm{Good})$ 0.93 under TF--IDF and 0.26 under the hybrid) but not on idioms: every model, DistilBERT included, still fails on ``could not be better''. This set is small and hand-written, so it is diagnostic only. On Comcast complaints Bad recall stays above 98\%, but only 51 Good reviews exist, so macro-F1 of 0.64--0.70 rests on few examples. The dataset has no demographic attributes, so these tests are not a fairness assessment.
 
 \section{Case Study 3: Text Summarization}\label{sec:sum}
+\begin{csabstract}
+Extractive summaries of customer reviews can silently distort what customers said. This case study introduces Polarity- and Aspect-Balanced MMR (PAB-MMR), which adds a sentiment-fidelity penalty and an aspect-coverage reward to Maximal Marginal Relevance, together with punctuation recovery for text that has none. On 47 telecom review clusters, compared with MMR, PAB-MMR reduced the polarity gap from 0.059 to 0.019, raised aspect recall from 0.680 to 0.850 and raised the sentiment hit rate from 0.702 to 0.936. Punctuation restoration raised sentence-boundary F1 from 0.299 to 0.828. Against human references on 20 FewSum products, ROUGE was statistically tied across all methods and PAB-MMR showed no sentiment advantage. The telecom gains are on metrics the method targets, so they show that it does what it was designed to do rather than that readers prefer its summaries.
+\end{csabstract}
 \subsection{Original contribution: PAB-MMR}
 Maximal Marginal Relevance [16] balances relevance and redundancy. Polarity- and Aspect-Balanced MMR adds two terms. Given source sentences with vectors $\mathbf{x}_i$, polarity $p_i$ and aspect $a_i$, and a target share of positive sentiment $\pi$, it greedily selects under a word budget
 \begin{equation}
@@ -248,6 +355,20 @@ s^\ast=\arg\max_{i\notin S}\Big[\lambda\cos(\mathbf{x}_i,\bar{\mathbf{x}})-(1-\l
 where $w(a)$ is the aspect's share of the cluster and $\bar{p}$ is the word-weighted mean polarity. Jensen--Shannon divergence with base-2 logarithms is bounded in $[0,1]$, is zero exactly when the distributions match, and is symmetric, so it is a stable penalty for greedy selection. Setting $\beta=\eta=0$ recovers standard MMR, so the method is a strict generalisation and each term can be tested by ablation.
 
 \textbf{Aspects} (billing, speed, support, installation, contract) use five seed lists expanded with PA-W2V neighbours (\repolink{results/summarization/aspect_lexicon.json}{aspect_lexicon.json}), connecting this task to Case Study 1. Telecom polarity comes from TF--IDF models cross-fitted across folds, so a review's own label never affects its sentence scores, connecting it to Case Study 2.
+
+\subsection{Implementation and logic}
+\begin{enumerate}
+\item \textbf{Segment.} Split punctuated text directly; otherwise restore sentence boundaries with the punctuation model.
+\item \textbf{Vectorize.} Represent each sentence with TF--IDF across the cluster.
+\item \textbf{Score sentiment and aspect.} Attach a polarity to each sentence, and an aspect from the expanded lexicon.
+\item \textbf{Select greedily.} At each step add the sentence with the best combined score that still fits the budget.
+\item \textbf{Stop.} Finish when no remaining sentence fits within the word budget.
+\end{enumerate}
+\codefile{pab_mmr}{PAB-MMR greedy selection}{summarize.py}
+For each candidate, the score starts with standard MMR. A candidate from an unseen aspect gains a reward in proportion to that aspect's share of the cluster, and the penalty is calculated on the summary \emph{as it would be if this sentence were added}, so the selection steers towards the cluster's true sentiment share as it goes.
+\codefile{segment_many}{Sentence recovery with the punctuation model}{punctuate.py}
+Long reviews are cut into 200-word windows and sorted by length for efficient batching, and a new sentence starts wherever the model predicts a full stop or question mark.
+\codefile{expand_aspects}{Aspect lexicon expansion with PA-W2V neighbours}{summarize.py}
 
 \subsection{Recovering sentences from unpunctuated text}
 The telecom corpus has no punctuation, so sentences must be recovered. To measure this with real ground truth, punctuation was stripped from 453 multi-sentence FewSum reviews and boundaries were compared with the originals.
@@ -262,20 +383,26 @@ Using the FewSum gold summaries [26] and ROUGE [25], hyperparameters were select
 \caption{ROUGE-2 F1 on FewSum test. Confidence intervals overlap, so the methods are not separable.}
 \end{figure}
 \textbf{All methods are statistically tied.} PAB-MMR against MMR gives a mean ROUGE-2 difference of +0.001 ($p=0.41$), and with 20 products this test has limited power. Scores are low across the board because human summaries paraphrase heavily and extractive methods cannot match unseen wording. The correct reading is that the balance terms \emph{do not harm} reference similarity; they do not improve it.
+\T{sum_detail}
+Table~\ref{tab:fewsumdetail} also tests sentiment fidelity outside telecom, scoring whole summaries with the untrained SST-2 model against mean star ratings. Here PAB-MMR shows no advantage: the tuned version has the lowest sentiment hit (0.60) and the fixed version 0.75, against 0.80 for Lead. With 20 products one summary changes the rate by 0.05, and this scoring differs from the sentence scores PAB-MMR optimises, so the result should be read as no evidence of a benefit on this benchmark.
 
 \subsection{Evaluation on telecom digests}
 No human references exist for telecom clusters, so intrinsic measures are used over 47 clusters (up to 60 reviews each) with PAB-MMR weights fixed in advance ($\lambda=0.7,\beta=0.3,\eta=0.5$). \emph{Polarity gap} is the Jensen--Shannon divergence between summary sentiment and the true share of Good reviews; \emph{aspect recall} is the share of the cluster's segments whose aspect appears in the summary.
 \T{sum_telecom}
 \T{sum_tests}
+\T{sum_hits}
 \begin{figure}[H]\centering
 \includegraphics[width=0.72\textwidth]{summarization/telecom_polarity_gap.png}
 \caption{Sentiment drift from the source cluster. BART is evaluated with the sentence-polarity model trained on all reviews.}
 \end{figure}
-PAB-MMR reduces the polarity gap by 67\% against MMR (0.059 to 0.019) and raises aspect recall from 0.680 to 0.850, both significant. The cost is a small fall in centroid similarity (0.576 to 0.545). \textbf{An important caveat:} polarity gap and aspect recall are what PAB-MMR explicitly optimises, so this shows that the method does what it is designed to do, not that human readers prefer it. A reader study would be needed for that claim.
+PAB-MMR reduces the polarity gap by 67\% against MMR (0.059 to 0.019) and raises aspect recall from 0.680 to 0.850, both significant. Its digests agree with the cluster's majority sentiment in 93.6\% of clusters, against 70.2\% for MMR and 80.9\% for BART. The cost is a small fall in centroid similarity (0.576 to 0.545), and word-distribution distance stays about the same (0.529 to 0.534). \textbf{An important caveat:} polarity gap and aspect recall are what PAB-MMR explicitly optimises, so this shows that the method does what it is designed to do, not that human readers prefer it. A reader study would be needed for that claim.
 \T{sum_examples}
 BART-large-CNN [17], a news model, tends to copy from the start of its truncated input (novel token rate 2.4\%) and in one cluster produced text about other providers, as the concatenated input mixes mentions. Extractive digests remain directly traceable to source reviews, which supports human verification. The digests also show remaining weaknesses: sentences can be off-topic, and provider clusters are found by keyword, so a review mentioning a competitor can enter the wrong cluster.
 
 \section{Case Study 4: Factoid Question Answering}\label{sec:qa}
+\begin{csabstract}
+A support analyst often needs one fact from thousands of complaints, and a system that always answers will invent one when it is absent. This case study builds a retriever--reader pipeline over 5,629 Comcast complaints, with answer-type gating and calibrated abstention, and evaluates it on 2,000 SQuAD questions and a new 132-question domain set. The RoBERTa reader reached exact match 0.844 on SQuAD. On 68 held-out answerable telecom questions, the end-to-end system reached exact match 0.618 and Hit@5 0.691, with document retrieval at Hit@5 0.824 and MRR 0.703. Abstention raised overall accuracy on all 88 held-out questions from 0.477 to 0.602 and rejected 80\% of unanswerable questions, at an answerability AUROC of 0.847. When the correct complaint was retrieved, exact match reached 0.894, and 21 of 26 errors came from retrieving the wrong complaint. Word2Vec fusion weakened fact retrieval, a useful negative result. The domain set has one annotator, and its test portion was not strictly blind.
+\end{csabstract}
 \subsection{Pipeline}
 The system follows the classic retriever--reader architecture for factoid QA [28]:
 \begin{enumerate}
@@ -289,6 +416,16 @@ The system follows the classic retriever--reader architecture for factoid QA [28
 \end{equation}
 the reader's advantage over its no-answer option plus a retrieval bonus. If the best score falls below a threshold $\tau$ tuned on development questions, the system answers ``not found in the corpus''. Every answer is returned with its source complaint.
 \end{enumerate}
+
+\subsection{Implementation and logic}
+\codefile{answer_type}{Question processing: expected answer type}{qa.py}
+Ordered rules map question wording to a type. Time and date are checked first, and duration before money, so ``how long'' and ``how many days'' are not mistaken for amounts.
+\codefile{rank}{Passage retrieval: BM25, dense, fusion and reranking}{qa.py}
+The method supports four strategies. Equal-weight fusion combines BM25 and dense rankings by reciprocal rank. Reranking is gentler: it keeps BM25's top 100 and adds a small weighted dense score, so embeddings can only reorder passages that BM25 already found.
+\codefile{answer}{Reading, gating and scoring}{qa.py}
+Each span keeps its advantage over the reader's no-answer option, plus a bonus for appearing in a highly ranked passage. Spans that fail the type gate are skipped, and the best remaining span keeps its source passage as evidence.
+\codefile{selective_qa}{Evaluating abstention}{metrics.py}
+\codefile{retrieval_scores}{Ranking metrics}{metrics.py}
 
 \subsection{Why a new gold set was needed}
 No public factoid set exists for telecom complaints. A set of 132 questions was therefore written against seeded samples of complaints (\repolink{data/gold/qa_gold.jsonl}{qa_gold.jsonl}). Every answer was checked programmatically to occur verbatim in its source complaint. Thirty questions ask for facts the corpus should not contain. Questions were split into 44 development and 88 test before any system was run.
@@ -315,10 +452,13 @@ A reader clearly beats regular-expression extraction (0.618 against 0.324, with 
 \caption{Lowering the threshold answers more questions but rejects fewer unanswerable ones.}
 \end{figure}
 Without abstention, the system invents an answer for every unanswerable question. With the threshold chosen on development data, it rejects 80\% of them, and answered exact match rises from 0.618 to 0.755, while still answering 72\% of answerable questions. Overall accuracy rises from 0.477 to 0.602. This is the largest practical gain in the QA case study.
+\T{qa_hits}
+\T{qa_extra}
 \T{qa_types}
+The type table is split thinly: COUNT and TIME score 1.000 on only one and two questions, so these are not meaningful perfect scores. Table~\ref{tab:qaextra} shows that the abstention score separates answerable from unanswerable questions well (AUROC 0.847). Rejection precision is only 0.457, though, because abstention also turns away many answerable questions: 19 answerable questions are rejected alongside the 16 unanswerable ones. The gate changed the result on only two questions, both in its favour, which is too few to be significant ($p=0.50$).
 
 \subsection{Error analysis}
-Inspection of errors (\repolink{results/qa/test_errors.csv}{test_errors.csv}) shows three main causes:
+Table~\ref{tab:qaextra} locates the main weakness. Answers drawn from the correct complaint are right 89.4\% of the time, while answers from a wrong complaint are never exactly right, and 21 of the 26 errors come from a wrong complaint. Retrieval, not reading, is therefore where future work should concentrate. Inspection of errors (\repolink{results/qa/test_errors.csv}{test_errors.csv}) shows three main causes:
 \begin{itemize}
 \item \textbf{Wrong complaint retrieved.} Many complaints share the same pattern, so ``How much in lost wages\ldots'' can find a similar case with another figure. A plausible amount from the wrong complaint fits the expected type and passes the gate.
 \item \textbf{Span boundaries.} ``158.00 a month'' against gold ``158.00'' is correct in substance but counted wrong by exact match; token F1 captures this partly.
@@ -327,6 +467,7 @@ Inspection of errors (\repolink{results/qa/test_errors.csv}{test_errors.csv}) sh
 
 \section{Integrated System}
 All four components run together in \repolink{notebooks/05_integrated_system.ipynb}{05_integrated_system.ipynb}, which also runs the unit tests (\repolink{tests/test_core.py}{tests/test_core.py}). Outputs are recorded in \repolink{results/integrated/demo.json}{demo.json}.
+\codefile{triage}{Integrated triage operation}{pipeline.py}
 \T{demo_triage}
 \T{demo_qa}
 \textbf{Digest for Virgin reviews:} \input{generated/demo_digest}
@@ -352,7 +493,7 @@ Reference & Focus and reported contribution & Relationship to this project\\
 \section{Threats to Validity and Disclosed Limitations}\label{sec:threats}
 \begin{itemize}
 \item \textbf{Single-annotator QA gold.} One annotator wrote the 132 questions, reading the complaints directly, so they share vocabulary with their sources. This favours lexical retrieval, and the 88 test questions give wide confidence intervals.
-\item \textbf{Changes after seeing test results.} These are disclosed in full: (i) the answer-type pattern was broadened after a test error revealed a bug, leaving the dev-selected exact match unchanged at 0.618; (ii) reranking modes were added after a first run in which fusion performed badly, though selection remained on development data; (iii) the cue-word segmenter was replaced after its measured failure on the segmentation benchmark; (iv) after the first summarization run, BART's telecom length limit was lowered towards the word budget and the minimum telecom segment length was raised from four to five words. The QA test set is therefore not strictly blind.
+\item \textbf{Changes after seeing test results.} These are disclosed in full: (i) the answer-type pattern was broadened after a test error revealed a bug, leaving the dev-selected exact match unchanged at 0.618; (ii) reranking modes were added after a first run in which fusion performed badly, though selection remained on development data; (iii) the cue-word segmenter was replaced after its measured failure on the segmentation benchmark; (iv) after the first summarization run, BART's telecom length limit was lowered towards the word budget and the minimum telecom segment length was raised from four to five words. The QA test set is therefore not strictly blind. The Hit@$k$, nDCG, AUROC, MCC and related metrics were also added after the first results were seen. They are reported for every model, and no model, weight or threshold was changed because of them.
 \item \textbf{Self-aligned metrics.} PAB-MMR's telecom advantage is on metrics it optimises. No reader study has been conducted.
 \item \textbf{Small benchmarks.} FewSum test has 20 products; the contrast set has 30 sentences; Comcast has 51 Good reviews.
 \item \textbf{Embedding held-out pairs are curated.} They were chosen by hand from common telecom words. A different list would change the numbers.
@@ -365,7 +506,7 @@ Reference & Focus and reported contribution & Relationship to this project\\
 This case study delivers all four assigned topics as one working, evaluated system. Its main findings are:
 \begin{enumerate}
 \item \textbf{Word2Vec.} Plain embeddings confuse opposites. PA-W2V cut held-out antonym similarity from 0.683 to 0.373 and improved embedding-based sentiment significantly, though sentence-level pooling hides much of the gain and SimLex shows no change.
-\item \textbf{Sentiment.} Fine-tuned DistilBERT achieved macro-F1 0.916. Cross-fitted selective triage met its 5\% risk target on unseen folds while automating 91\% of reviews.
+\item \textbf{Sentiment.} Fine-tuned DistilBERT achieved macro-F1 0.916, ROC-AUC 0.974 and MCC 0.832, and its 100 most negative predictions were all correct. Cross-fitted selective triage met its 5\% risk target on unseen folds while automating 91\% of reviews.
 \item \textbf{Summarization.} PAB-MMR reduced sentiment drift by 67\% and increased aspect recall without measurable harm to ROUGE. Punctuation restoration made unpunctuated reviews usable, with boundary F1 of 0.83.
 \item \textbf{Factoid QA.} Answer gating and abstention rejected 80\% of unanswerable questions and raised overall accuracy from 0.477 to 0.602. BM25 outperformed embeddings for retrieval, which is a useful negative result.
 \end{enumerate}
@@ -418,6 +559,8 @@ Claim & Evidence file\\
 Word2Vec metrics, five folds & \repolink{results/word2vec/intrinsic_by_fold.csv}{results/word2vec/intrinsic_by_fold.csv}\\
 Counter-fitting grid & \repolink{results/word2vec/counterfit_tuning.csv}{results/word2vec/counterfit_tuning.csv}\\
 Sentiment scores and intervals & \repolink{results/sentiment/scores.csv}{results/sentiment/scores.csv}\\
+ROC-AUC, MCC, Brier and related metrics & \repolink{results/sentiment/extra_metrics.csv}{results/sentiment/extra_metrics.csv}\\
+Triage queue Hit@$k$ & \repolink{results/sentiment/triage_queue_hits.csv}{results/sentiment/triage_queue_hits.csv}\\
 Paired sentiment tests & \repolink{results/sentiment/comparisons.csv}{results/sentiment/comparisons.csv}\\
 Per-review out-of-fold probabilities & \repolink{results/sentiment/oof_probabilities.csv}{results/sentiment/oof_probabilities.csv}\\
 Selective triage & \repolink{results/sentiment/selective.csv}{results/sentiment/selective.csv}\\
@@ -429,6 +572,7 @@ SQuAD benchmark & \repolink{results/qa/squad_reader_benchmark.csv}{results/qa/sq
 QA configuration search on development data & \repolink{results/qa/dev_search.csv}{results/qa/dev_search.csv}\\
 Every held-out QA prediction & \repolink{results/qa/test_predictions.jsonl}{results/qa/test_predictions.jsonl}\\
 Abstention results & \repolink{results/qa/test_selective.json}{results/qa/test_selective.json}\\
+Answer Hit@$k$, AUROC and error sources & \repolink{results/qa/qa_extra.json}{results/qa/qa_extra.json}\\
 Integrated outputs and unit tests & \repolink{results/integrated/demo.json}{results/integrated/demo.json}, \repolink{results/integrated/pytest.txt}{pytest.txt}\\
 \bottomrule
 \end{tabular}
@@ -466,24 +610,6 @@ tau 3.2721939086914062
 \item Run all cells. The first cell clones the repository and downloads public data; results are written to \texttt{results/}.
 \item Seeds are fixed at 42. Tables in this report are generated from \texttt{results/} by \repolink{tools/make_tables.py}{make_tables.py}.
 \end{enumerate}
-\textbf{Reproducibility check.} A second complete run from a fresh GitHub clone reproduced the from-scratch SGNS and PA-W2V metrics and the TF--IDF, DistilBERT, summarization and QA headline scores. Two small differences were observed. The gensim baselines train on several threads and are not exactly repeatable: their metrics varied by up to 0.038, and FastText sentiment macro-F1 moved from 0.863 to 0.857. DistilBERT's 5\% deferral count moved from 892 to 895 reviews. No conclusion in this report depends on these differences.
+\textbf{Reproducibility check.} A repeat run from a fresh GitHub clone reproduced the from-scratch SGNS and PA-W2V metrics and the TF--IDF, DistilBERT, summarization and QA headline scores. Two small differences were observed. The gensim baselines train on several threads and are not exactly repeatable: their word-pair metrics varied by about 0.04 between runs, and FastText sentiment macro-F1 moved from 0.863 to 0.857. DistilBERT's 5\% deferral count moved from 892 to 895 reviews. No conclusion in this report depends on these differences. Notebooks 01, 03 and 04 were run once more to add the Hit@$k$ and related metrics, and their earlier headline scores did not change. The sentiment metrics in Tables~\ref{tab:sentextra}, \ref{tab:sentconfusion} and \ref{tab:sentqueue} were calculated from the saved out-of-fold probabilities by \repolink{tools/extra_metrics.py}{extra_metrics.py}, without retraining.
 
-\clearpage
-\section{Selected Implementation Fragment}
-\begin{lstlisting}[language=Python]
-def answer(self, question, gate=True, retrieval_weight=2.0):
-    ranked, top, contexts, all_spans = self.read(question)
-    kind = answer_type(question)
-    best = {"answer": "", "score": -1e9, "doc_id": None, "evidence": "", "type": kind}
-    for position, spans in enumerate(all_spans):
-        for span in spans:
-            if gate and not passes_gate(kind, span["text"]):
-                continue
-            score = span["margin"] + retrieval_weight / (position + 1)
-            if score > best["score"]:
-                best = {"answer": span["text"], "score": score,
-                        "doc_id": self.retriever.passages[top[position]]["doc_id"],
-                        "evidence": contexts[position], "type": kind}
-    return best, ranked
-\end{lstlisting}
 \end{document}

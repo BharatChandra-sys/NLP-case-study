@@ -1,21 +1,21 @@
 \begin{table}[H]
 \centering
 \footnotesize
-\caption{Retrieval of the evidence complaint among 5,629 documents (held-out answerable questions).}
+\caption{Retrieval of the evidence complaint among 5,629 documents (68 held-out answerable questions). With one relevant document per question, Hit@$k$ equals Recall@$k$ and MAP equals MRR.}
 \label{tab:retrieval}
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccccc}
 \toprule
-Retriever & Recall@1 & Recall@5 & Recall@20 & MRR \\
+Retriever & Hit@1 & Hit@3 & Hit@5 & Hit@10 & Hit@20 & MRR & nDCG@10 \\
 \midrule
-BM25 & 0.603 & 0.824 & 0.868 & 0.699 \\
-SGNS dense & 0.162 & 0.324 & 0.500 & 0.234 \\
-PA-W2V dense & 0.132 & 0.265 & 0.397 & 0.192 \\
-BM25 + SGNS & 0.250 & 0.618 & 0.853 & 0.427 \\
-BM25 + PA-W2V & 0.235 & 0.559 & 0.853 & 0.391 \\
-BM25 rerank SGNS 0.25 & 0.603 & 0.824 & 0.868 & 0.703 \\
-BM25 rerank SGNS 0.5 & 0.603 & 0.824 & 0.868 & 0.700 \\
-BM25 rerank PA-W2V 0.25 & 0.603 & 0.838 & 0.882 & 0.697 \\
-BM25 rerank PA-W2V 0.5 & 0.588 & 0.838 & 0.882 & 0.695 \\
+BM25 & 0.603 & 0.765 & 0.824 & 0.853 & 0.868 & 0.699 & 0.735 \\
+SGNS dense & 0.162 & 0.235 & 0.324 & 0.412 & 0.500 & 0.234 & 0.269 \\
+PA-W2V dense & 0.132 & 0.191 & 0.265 & 0.353 & 0.397 & 0.192 & 0.225 \\
+BM25 + SGNS & 0.250 & 0.544 & 0.618 & 0.779 & 0.853 & 0.427 & 0.505 \\
+BM25 + PA-W2V & 0.235 & 0.471 & 0.559 & 0.750 & 0.853 & 0.391 & 0.468 \\
+BM25 rerank SGNS 0.25 & 0.603 & 0.779 & 0.824 & 0.853 & 0.868 & 0.703 & 0.738 \\
+BM25 rerank SGNS 0.5 & 0.603 & 0.765 & 0.824 & 0.853 & 0.868 & 0.700 & 0.735 \\
+BM25 rerank PA-W2V 0.25 & 0.603 & 0.779 & 0.838 & 0.853 & 0.882 & 0.697 & 0.733 \\
+BM25 rerank PA-W2V 0.5 & 0.588 & 0.779 & 0.838 & 0.853 & 0.882 & 0.695 & 0.732 \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,0 +1,20 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Additional held-out metrics for the dev-selected system.}
+\label{tab:qaextra}
+\begin{tabular}{p{9.6cm}c}
+\toprule
+Metric & Value \\
+\midrule
+Answerability AUROC (score separates answerable from unanswerable) & 0.847 \\
+Answerability average precision & 0.941 \\
+Rejection precision / recall / F1 at $\tau$ & 0.457 / 0.800 / 0.582 \\
+Overall accuracy 95\% CI with abstention & 0.500--0.705 \\
+Answer drawn from the correct complaint & 0.691 \\
+Exact match when the correct complaint is used & 0.894 \\
+Errors from the wrong complaint / from the right complaint & 21 / 5 \\
+Gate vs no gate: correct only with / only without; McNemar $p$ & 2 / 0; 0.500 \\
+\bottomrule
+\end{tabular}
+\end{table}

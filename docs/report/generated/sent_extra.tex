@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Threshold-free and agreement metrics from the saved out-of-fold probabilities.}
+\label{tab:sentextra}
+\begin{tabular}{lccccccc}
+\toprule
+Model & ROC-AUC & PR-AUC (Bad) & MCC & Kappa & Bal.\ acc. & Brier & Log loss \\
+\midrule
+\textbf{DistilBERT fine-tuned} & \textbf{0.974} & \textbf{0.973} & \textbf{0.832} & \textbf{0.832} & \textbf{0.916} & \textbf{0.062} & \textbf{0.213} \\
+TF-IDF LR & 0.963 & 0.961 & 0.795 & 0.794 & 0.897 & 0.074 & 0.248 \\
+TF-IDF + PA-W2V & 0.961 & 0.958 & 0.792 & 0.791 & 0.895 & 0.076 & 0.259 \\
+TF-IDF + SGNS & 0.959 & 0.955 & 0.782 & 0.781 & 0.891 & 0.079 & 0.266 \\
+PA-W2V mean LR & 0.947 & 0.939 & 0.772 & 0.771 & 0.885 & 0.089 & 0.299 \\
+SGNS+neg mean LR & 0.946 & 0.939 & 0.757 & 0.756 & 0.878 & 0.091 & 0.304 \\
+SGNS mean LR & 0.941 & 0.929 & 0.744 & 0.743 & 0.871 & 0.095 & 0.319 \\
+FastText mean LR & 0.934 & 0.923 & 0.717 & 0.715 & 0.857 & 0.102 & 0.340 \\
+DistilBERT SST-2 (no training) & 0.924 & 0.910 & 0.676 & 0.645 & 0.822 & 0.166 & 0.887 \\
+\bottomrule
+\end{tabular}
+\end{table}

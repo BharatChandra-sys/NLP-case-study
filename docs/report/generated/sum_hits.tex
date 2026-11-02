@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Telecom clusters: sentiment hit (summary and cluster agree on the majority sentiment), unigram JS divergence from the source, and compression ratio.}
+\label{tab:telecomhits}
+\begin{tabular}{lccc}
+\toprule
+Method & Sentiment hit & Unigram JS & Compression \\
+\midrule
+Lead & 0.681 & 0.615 & 0.0246 \\
+Centroid & 0.681 & 0.588 & 0.0248 \\
+TextRank & 0.702 & 0.582 & 0.0249 \\
+MMR & 0.702 & 0.529 & 0.0248 \\
+\textbf{PAB-MMR} & \textbf{0.936} & \textbf{0.534} & \textbf{0.0249} \\
+BART-large-CNN & 0.809 & 0.557 & 0.0527 \\
+\bottomrule
+\end{tabular}
+\end{table}

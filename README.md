@@ -30,6 +30,8 @@ Telecom teams need to find unhappy customers, understand what customers say in a
 | **Factoid QA** | Answer-type gating and abstention | Always answer: accuracy 0.477 | **0.602** |
 | | | Answered exact match 0.618 | **0.755** |
 | | | Unanswerable rejected 0% | **80%** |
+| | | Answerability AUROC | **0.847** |
+| | | Exact match when the right complaint is found | **0.894** |
 
 ### What did not improve
 
@@ -118,6 +120,8 @@ python tools/kaggle_sync.py code -m "update"   # upload code as a private datase
 python tools/kaggle_sync.py push 01            # run a notebook on Kaggle
 python tools/kaggle_sync.py pull 01            # download its outputs
 python tools/collect_results.py                # copy outputs into results/
+python tools/extra_metrics.py                  # calculate extra sentiment metrics
+python tools/make_code_listings.py             # extract code listings for the report
 python tools/make_tables.py                    # rebuild the report tables
 ```
 

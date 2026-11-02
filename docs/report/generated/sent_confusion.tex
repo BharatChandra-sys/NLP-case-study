@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Out-of-fold confusion counts (4,972 Bad and 4,902 Good reviews).}
+\label{tab:sentconfusion}
+\begin{tabular}{lcccc}
+\toprule
+Model & Bad as Bad & Bad as Good & Good as Bad & Good as Good \\
+\midrule
+\textbf{DistilBERT fine-tuned} & \textbf{4,524} & \textbf{448} & \textbf{383} & \textbf{4,519} \\
+TF-IDF LR & 4,572 & 400 & 618 & 4,284 \\
+TF-IDF + PA-W2V & 4,583 & 389 & 642 & 4,260 \\
+TF-IDF + SGNS & 4,562 & 410 & 669 & 4,233 \\
+PA-W2V mean LR & 4,548 & 424 & 707 & 4,195 \\
+SGNS+neg mean LR & 4,493 & 479 & 727 & 4,175 \\
+SGNS mean LR & 4,484 & 488 & 781 & 4,121 \\
+FastText mean LR & 4,448 & 524 & 884 & 4,018 \\
+DistilBERT SST-2 (no training) & 4,830 & 142 & 1,605 & 3,297 \\
+\bottomrule
+\end{tabular}
+\end{table}

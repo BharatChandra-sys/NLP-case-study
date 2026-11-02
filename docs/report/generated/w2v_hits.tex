@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Neighbour retrieval on held-out pairs. Synonym Hit@10 and MRR should be high; antonym Hit@10 counts an opposite word intruding among the ten nearest neighbours, so lower is better.}
+\label{tab:w2vhits}
+\begin{tabular}{lcccc}
+\toprule
+Model & Synonym Hit@10 & Synonym MRR & Antonym Hit@10 & Negation Hit@10 \\
+\midrule
+SGNS (scratch) & 0.640 & 0.407 & 0.100 & -- \\
+gensim Word2Vec & 0.760 & 0.494 & 0.225 & -- \\
+FastText & 0.707 & 0.172 & 0.325 & -- \\
+SGNS + negation & 0.587 & 0.373 & 0.087 & 0.149 \\
+\textbf{PA-W2V} & \textbf{0.560} & \textbf{0.380} & \textbf{0.013} & \textbf{0.104} \\
+\bottomrule
+\end{tabular}
+\end{table}
